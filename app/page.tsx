@@ -4,7 +4,8 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { useState, useRef } from "react"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 // Custom cubic bezier for Apple-esque fluid motion
@@ -83,6 +84,35 @@ export default function Home() {
     },
   ]
 
+  const accordionItems = [
+    {
+      id: "web",
+      title: "Digital Products",
+      image: "/digital-product-interface.png",
+      href: "/services"
+    },
+    {
+      id: "brand",
+      title: "Brand Systems",
+      image: "/modern-brand-identity.png",
+      href: "/services"
+    },
+    {
+      id: "strategy",
+      title: "Strategy",
+      image: "/vibrant-marketing-campaign.png",
+      href: "/services"
+    },
+    {
+      id: "mobile",
+      title: "Mobile Apps",
+      image: "/mobile-app-design.jpg",
+      href: "/services"
+    }
+  ]
+
+  const [hoveredAccordion, setHoveredAccordion] = useState<number | null>(null)
+
   return (
     <main className="min-h-[100dvh] bg-background selection:bg-accent/20 selection:text-foreground overflow-hidden">
       <Navigation />
@@ -126,6 +156,117 @@ export default function Home() {
               </Link>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* 1.5. INTERACTIVE HORIZONTAL ACCORDION NAVIGATION */}
+      <section className="hidden md:flex w-full h-[75vh] min-h-[600px] overflow-hidden bg-foreground">
+        {accordionItems.map((item, i) => {
+          const isHovered = hoveredAccordion === i;
+          const isAnyHovered = hoveredAccordion !== null;
+
+          return (
+            <motion.div
+              key={item.id}
+              onMouseEnter={() => setHoveredAccordion(i)}
+              onMouseLeave={() => setHoveredAccordion(null)}
+              className="relative h-full border-r border-background/10 last:border-r-0 cursor-pointer overflow-hidden group"
+              animate={{
+                flex: isHovered ? 3 : isAnyHovered ? 0.8 : 1,
+              }}
+              transition={{ duration: 0.6, ease }}
+            >
+              {/* Background Image */}
+              <motion.div
+                className="absolute inset-0 w-full h-full"
+                animate={{
+                  scale: isHovered ? 1 : 1.15,
+                  opacity: isHovered ? 0.6 : 0,
+                }}
+                transition={{ duration: 0.8, ease }}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
+              </motion.div>
+
+              {/* Default State Background (Solid Color) */}
+              <motion.div
+                className="absolute inset-0 w-full h-full bg-foreground z-[-1]"
+              />
+
+              {/* Content Wrap */}
+              <div className="absolute inset-0 z-10 flex flex-col justify-between p-8 md:p-12">
+                {/* Top Number */}
+                <motion.span
+                  className="text-background/40 font-mono text-sm"
+                  animate={{
+                    opacity: isHovered ? 1 : 0.5,
+                  }}
+                >
+                  0{i + 1}
+                </motion.span>
+
+                {/* Bottom Title & Link */}
+                <div className="flex flex-col gap-6">
+                  <motion.h2
+                    className="text-3xl lg:text-5xl font-medium tracking-tight text-background whitespace-nowrap"
+                    animate={{
+                      y: isHovered ? 0 : 20,
+                      rotate: isHovered ? 0 : -90,
+                      transformOrigin: "left bottom",
+                      scale: isHovered ? 1 : 0.8,
+                    }}
+                    transition={{ duration: 0.6, ease }}
+                    style={{
+                      position: isHovered ? "relative" : "absolute",
+                      bottom: isHovered ? "auto" : "3rem",
+                      left: isHovered ? "auto" : "3rem",
+                    }}
+                  >
+                    {item.title}
+                  </motion.h2>
+
+                  <motion.div
+                    animate={{
+                      opacity: isHovered ? 1 : 0,
+                      y: isHovered ? 0 : 10,
+                    }}
+                    transition={{ duration: 0.4, delay: isHovered ? 0.2 : 0 }}
+                    className="overflow-hidden"
+                  >
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center gap-2 text-background hover:text-accent transition-colors"
+                    >
+                      <span className="text-sm font-medium uppercase tracking-widest">Explore</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </section>
+
+      {/* Mobile Fallback for Accordion */}
+      <section className="md:hidden py-24 px-4 bg-foreground">
+        <div className="flex flex-col gap-4">
+          {accordionItems.map((item, i) => (
+            <Link key={item.id} href={item.href} className="group relative h-48 w-full rounded-[2rem] overflow-hidden">
+              <Image src={item.image} alt={item.title} fill className="object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                <span className="text-white/40 font-mono text-xs mb-2">0{i + 1}</span>
+                <h2 className="text-2xl font-medium text-white">{item.title}</h2>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
