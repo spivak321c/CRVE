@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ArrowRight } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,23 +16,40 @@ const navItems = [
 
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 60)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const closeMenu = () => setMobileOpen(false)
 
   return (
-    <nav className="fixed top-0 w-full z-50">
-      <div className="bg-background/80 backdrop-blur-xl border-b border-border/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-1">
-              <span className="text-foreground">CRVE</span>
-              <span className="text-accent">.</span>
+    <>
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+          scrolled ? "bg-black/90 backdrop-blur-md" : "bg-black"
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex items-center justify-between h-20 md:h-24">
+            <Link href="/" className="text-lg md:text-3xl font-extrabold tracking-tight text-white" onClick={closeMenu}>
+              CRVE<span className="text-neutral-600">.</span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-10">
               {navItems.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="px-4 py-2 text-sm font-medium rounded-lg transition-colors text-foreground/70 hover:text-foreground hover:bg-accent/5"
+                  className="nav-link text-xs font-medium uppercase tracking-widest text-neutral-500 hover:text-white"
                 >
                   {item.label}
                 </Link>
@@ -41,54 +58,67 @@ export function Navigation() {
 
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-full text-sm font-medium hover:opacity-90 transition-all"
+              className="nav-link hidden md:inline-flex text-xs font-medium uppercase tracking-widest text-white"
             >
               Start a Project
-              <ArrowRight size={14} />
             </Link>
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 text-foreground"
+              className="md:hidden relative z-50 text-white"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
-      </div>
+      </motion.nav>
 
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/40 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black z-40 flex flex-col pt-28 px-8"
+            onClick={(e) => { if (e.target === e.currentTarget) closeMenu() }}
           >
-            <div className="px-4 py-4 space-y-1">
-              {navItems.map((item) => (
-                <Link
+            <div className="flex flex-col gap-6">
+              {navItems.map((item, i) => (
+                <motion.div
                   key={item.href}
-                  href={item.href}
-                  className="block px-4 py-3 text-foreground/70 hover:text-foreground hover:bg-accent/5 rounded-lg transition-all text-sm font-medium"
-                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05, duration: 0.4 }}
                 >
-                  {item.label}
-                </Link>
+                  <Link
+                    href={item.href}
+                    className="text-4xl font-medium tracking-tight text-white hover:text-neutral-500 transition-colors"
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
-              <Link
-                href="/contact"
-                className="block px-4 py-3 bg-accent text-accent-foreground rounded-xl text-sm font-medium text-center mt-4"
-                onClick={() => setMobileOpen(false)}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.4 }}
+                className="mt-6 pt-6 border-t border-neutral-900"
               >
-                Start a Project
-              </Link>
+                <Link
+                  href="/contact"
+                  className="text-sm font-medium uppercase tracking-widest text-white"
+                  onClick={closeMenu}
+                >
+                  Start a Project
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   )
 }

@@ -2,480 +2,246 @@
 
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { ScrollBackground } from "@/components/scroll-background"
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import Link from "next/link"
 import Image from "next/image"
-import { useState, useRef } from "react"
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { motion } from "framer-motion"
 
-// Custom cubic bezier for Apple-esque fluid motion
-const ease = [0.32, 0.72, 0, 1] as const
+const ease = [0.25, 1, 0.5, 1] as const
 
-const fadeUpVariant = {
-  hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 1, ease },
+const projects = [
+  {
+    id: "001",
+    title: "Cowrywise Finance",
+    category: "Brand Identity",
+    year: "2024",
+    image: "/Orange_Juice_Bottle_Mockup_3.jpg.jpeg",
+    hoverImage: "/crve-hover-1.jpg",
   },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
+  {
+    id: "002",
+    title: "Onchain Core",
+    category: "Digital Experience",
+    year: "2024",
+    image: "/alive.png",
+    hoverImage: "/crve-hover-2.jpg",
   },
-}
+  {
+    id: "003",
+    title: "Things Fall Apart",
+    category: "Campaign Strategy",
+    year: "2023",
+    image: "/Tape Coiled Up in Spiral Mockup.jpg.jpeg",
+    hoverImage: null,
+  },
+  {
+    id: "004",
+    title: "Brand Guidelines",
+    category: "Visual Identity",
+    year: "2024",
+    image: "/brand-guidelines.jpg",
+    hoverImage: null,
+  },
+]
 
 export default function Home() {
-  const featuredProjects = [
-    {
-      id: 1,
-      title: "Brand Identity System",
-      category: "Branding",
-      image: "/modern-brand-identity.png",
-      description: "Complete visual identity for a tech startup",
-      span: "md:col-span-8 md:row-span-2",
-      aspect: "aspect-[4/3] md:aspect-auto",
-    },
-    {
-      id: 2,
-      title: "Digital Experience",
-      category: "Design",
-      image: "/digital-product-interface.png",
-      description: "Innovative digital product interface",
-      span: "md:col-span-4 md:row-span-1",
-      aspect: "aspect-square",
-    },
-    {
-      id: 3,
-      title: "Campaign Strategy",
-      category: "Strategy",
-      image: "/vibrant-marketing-campaign.png",
-      description: "Integrated marketing campaign",
-      span: "md:col-span-4 md:row-span-1",
-      aspect: "aspect-square",
-    },
-  ]
-
-  const services = [
-    {
-      num: "01",
-      title: "Brand Strategy",
-      description:
-        "We develop comprehensive brand strategies that define your unique position in the market and resonate with your audience on a deeper level.",
-    },
-    {
-      num: "02",
-      title: "Design & Creative",
-      description:
-        "From visual identity to digital experiences, we create beautiful, purposeful, and functional designs that tell your unique story.",
-    },
-    {
-      num: "03",
-      title: "Digital Solutions",
-      description:
-        "We engineer performant digital products and web experiences that engage users and drive meaningful, measurable results for your business.",
-    },
-  ]
-
-  const accordionItems = [
-    {
-      id: "web",
-      title: "Digital Products",
-      image: "/digital-product-interface.png",
-      href: "/services"
-    },
-    {
-      id: "brand",
-      title: "Brand Systems",
-      image: "/modern-brand-identity.png",
-      href: "/services"
-    },
-    {
-      id: "strategy",
-      title: "Strategy",
-      image: "/vibrant-marketing-campaign.png",
-      href: "/services"
-    },
-    {
-      id: "mobile",
-      title: "Mobile Apps",
-      image: "/mobile-app-design.jpg",
-      href: "/services"
-    }
-  ]
-
-  const [hoveredAccordion, setHoveredAccordion] = useState<number | null>(null)
-
   return (
-    <main className="min-h-[100dvh] bg-background selection:bg-accent/20 selection:text-foreground overflow-hidden">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+      <ScrollBackground />
       <Navigation />
 
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-40 pb-20 px-4 md:px-6 lg:px-8 min-h-[90vh] flex flex-col justify-center">
-        <div className="max-w-7xl mx-auto w-full relative z-10">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="flex flex-col gap-6 md:gap-8"
-          >
-            {/* Massive Typography */}
-            <motion.h1
-              variants={fadeUpVariant}
-              className="text-5xl sm:text-6xl md:text-8xl lg:text-[7.5rem] font-medium tracking-tight leading-[0.95] text-foreground max-w-6xl"
-            >
-              Digital products. <br className="hidden md:block" />
-              Brand systems. <br className="hidden lg:block" />
-              <span className="text-foreground/40 italic font-light">Creative motion.</span>
-            </motion.h1>
+      {/* HERO */}
+      <section className="relative min-h-[80vh] md:min-h-screen flex items-center pt-28 pb-12 px-6 md:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-black z-0" />
+        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,#1a1a1a_0%,transparent_70%)]" />
 
-            {/* Subtitle & CTA */}
-            <motion.div
-              variants={fadeUpVariant}
-              className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-8 md:gap-12"
-            >
-              <p className="text-lg md:text-xl text-foreground/60 max-w-md font-light leading-relaxed">
-                An independent design and development studio. We build things people actually want to use.
-              </p>
+        <div className="max-w-[1400px] mx-auto w-full relative z-10">
+          <StaggerContainer>
+            <StaggerItem>
+              <span className="text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 mb-12 block">
+                Port Harcourt Rivers &mdash; Est. 2024
+              </span>
+            </StaggerItem>
 
+            <StaggerItem>
+              <h1 className="text-[clamp(48px,10vw,120px)] font-extrabold leading-[1.0] tracking-[-0.05em] text-white max-w-5xl">
+                <span className="block hero-line" data-text="Digital products.">Digital products.</span>
+                <span className="block hero-line" data-text="Brand systems.">Brand systems.</span>
+                <span className="block hero-line" data-text="Creative motion.">Creative motion.</span>
+              </h1>
+            </StaggerItem>
+
+            <StaggerItem>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
+                <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-md">
+                  An independent design and development studio. We build things people actually want to use.
+                </p>
+                <div className="flex flex-col items-start md:items-end">
+                  <Link
+                    href="/portfolio"
+                    className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
+                  >
+                    View Our Work
+                    <span className="inline-block w-12 h-px bg-white group-hover:w-20 transition-all duration-500" />
+                  </Link>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800 mt-4">
+                    Scroll to explore
+                  </span>
+                </div>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* FULL-BLEED REVEAL - Lined paper style with image */}
+      <section className="relative">
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          <Image
+            src="/crve-bg.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/90" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="min-h-screen flex flex-col justify-end px-6 md:px-12 pb-16 md:pb-20">
+            <div className="max-w-[1400px] mx-auto w-full">
+              <ScrollReveal>
+                <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/60">
+                  Selected Work
+                </span>
+              </ScrollReveal>
+            </div>
+          </div>
+
+          <div className="bg-black">
+            {/* TICKER */}
+            <div className="border-t border-b border-neutral-900 overflow-hidden py-4">
+              <div className="animate-marquee whitespace-nowrap flex">
+                <div className="inline-flex gap-16 shrink-0">
+                  {["Brand Identity", "Product Design", "Motion Graphics", "Web Engineering", "Digital Strategy"].map(
+                    (item) => (
+                      <span key={item} className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-800">
+                        {item}
+                      </span>
+                    )
+                  )}
+                </div>
+                <div className="inline-flex gap-16 shrink-0">
+                  {["Brand Identity", "Product Design", "Motion Graphics", "Web Engineering", "Digital Strategy"].map(
+                    (item) => (
+                      <span key={item} className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-800">
+                        {item}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* SELECTED WORK */}
+            <section className="border-t border-neutral-900">
+              <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+                <div className="flex justify-between items-center py-8 border-b border-neutral-900">
+                  <h2 className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600">
+                    Selected Work
+                  </h2>
+                  <Link href="/portfolio" className="nav-link text-xs font-medium text-neutral-600 hover:text-white uppercase tracking-widest">
+                    View all
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 py-10">
+                  {projects.map((project, i) => (
+                    <ScrollReveal key={project.id} delay={i * 0.1} y={20}>
+                      <div className="group cursor-pointer">
+                        <div className="relative w-full aspect-square overflow-hidden bg-neutral-950">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover img-primary"
+                          />
+                          {project.hoverImage ? (
+                            <Image
+                              src={project.hoverImage}
+                              alt=""
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className="object-cover img-secondary"
+                            />
+                          ) : (
+                            <div className="img-secondary bg-black/90 flex items-center justify-center">
+                              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-700">
+                                View Project
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mt-4 flex justify-between items-start gap-4">
+                          <div>
+                            <h3 className="text-base md:text-lg font-medium tracking-tight text-neutral-600 group-hover:text-white transition-colors">
+                              {project.title}
+                            </h3>
+                            <span className="text-xs text-neutral-700 font-mono mt-1 block">
+                              {project.id} / {project.category}
+                            </span>
+                          </div>
+                          <span className="text-xs text-neutral-700 font-mono shrink-0">
+                            {project.year}
+                          </span>
+                        </div>
+                      </div>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* MANIFESTO */}
+            <section className="border-t border-neutral-900">
+              <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2">
+                <ScrollReveal className="px-6 md:px-12 py-16 md:py-24 border-b md:border-b-0 md:border-r border-neutral-900">
+                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-4">
+                    Manifesto
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.1]">
+                    We build systems that outlast the noise.
+                  </h2>
+                </ScrollReveal>
+                <ScrollReveal delay={0.1} className="px-6 md:px-12 py-16 md:py-24 flex flex-col justify-between">
+                  <p className="text-sm md:text-base text-neutral-500 leading-relaxed font-light max-w-sm">
+                    CRVE is an independent studio in Port Harcourt. We don&apos;t subscribe to fleeting trends. Every system we build is designed to scale and outlive the moment.
+                  </p>
+                  <Link
+                    href="/about"
+                    className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors mt-8 group"
+                  >
+                    Learn About Our Approach
+                    <span className="inline-block w-6 h-px bg-white group-hover:w-10 transition-all duration-500" />
+                  </Link>
+                </ScrollReveal>
+              </div>
+            </section>
+
+            {/* CTA */}
+            <section className="border-t border-b border-neutral-900 py-10 md:py-12 px-6 md:px-12 text-center">
               <Link
                 href="/contact"
-                className="group flex items-center gap-3 px-6 py-4 bg-foreground text-background rounded-full font-medium transition-transform duration-500 ease-out hover:scale-[0.98] active:scale-[0.95]"
+                className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
               >
-                <span>Start a Project</span>
-                <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:bg-accent group-hover:text-accent-foreground">
-                  <ArrowRight size={14} className="transition-transform duration-500 group-hover:-rotate-45" />
-                </div>
+                Start a Project
+                <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
               </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 1.5. INTERACTIVE HORIZONTAL ACCORDION NAVIGATION */}
-      <section className="hidden md:flex w-full h-[75vh] min-h-[600px] overflow-hidden bg-foreground">
-        {accordionItems.map((item, i) => {
-          const isHovered = hoveredAccordion === i;
-          const isAnyHovered = hoveredAccordion !== null;
-
-          return (
-            <motion.div
-              key={item.id}
-              onMouseEnter={() => setHoveredAccordion(i)}
-              onMouseLeave={() => setHoveredAccordion(null)}
-              className="relative h-full border-r border-background/10 last:border-r-0 cursor-pointer overflow-hidden group"
-              animate={{
-                flex: isHovered ? 3 : isAnyHovered ? 0.8 : 1,
-              }}
-              transition={{ duration: 0.6, ease }}
-            >
-              {/* Background Image */}
-              <motion.div
-                className="absolute inset-0 w-full h-full"
-                animate={{
-                  scale: isHovered ? 1 : 1.15,
-                  opacity: isHovered ? 0.6 : 0,
-                }}
-                transition={{ duration: 0.8, ease }}
-              >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
-              </motion.div>
-
-              {/* Default State Background (Solid Color) */}
-              <motion.div
-                className="absolute inset-0 w-full h-full bg-foreground z-[-1]"
-              />
-
-              {/* Content Wrap */}
-              <div className="absolute inset-0 z-10 flex flex-col justify-between p-8 md:p-12">
-                {/* Top Number */}
-                <motion.span
-                  className="text-background/40 font-mono text-sm"
-                  animate={{
-                    opacity: isHovered ? 1 : 0.5,
-                  }}
-                >
-                  0{i + 1}
-                </motion.span>
-
-                {/* Bottom Title & Link */}
-                <div className="flex flex-col gap-6">
-                  <motion.h2
-                    className="text-3xl lg:text-5xl font-medium tracking-tight text-background whitespace-nowrap"
-                    animate={{
-                      y: isHovered ? 0 : 20,
-                      rotate: isHovered ? 0 : -90,
-                      transformOrigin: "left bottom",
-                      scale: isHovered ? 1 : 0.8,
-                    }}
-                    transition={{ duration: 0.6, ease }}
-                    style={{
-                      position: isHovered ? "relative" : "absolute",
-                      bottom: isHovered ? "auto" : "3rem",
-                      left: isHovered ? "auto" : "3rem",
-                    }}
-                  >
-                    {item.title}
-                  </motion.h2>
-
-                  <motion.div
-                    animate={{
-                      opacity: isHovered ? 1 : 0,
-                      y: isHovered ? 0 : 10,
-                    }}
-                    transition={{ duration: 0.4, delay: isHovered ? 0.2 : 0 }}
-                    className="overflow-hidden"
-                  >
-                    <Link
-                      href={item.href}
-                      className="inline-flex items-center gap-2 text-background hover:text-accent transition-colors"
-                    >
-                      <span className="text-sm font-medium uppercase tracking-widest">Explore</span>
-                      <ArrowRight size={14} />
-                    </Link>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </section>
-
-      {/* Mobile Fallback for Accordion */}
-      <section className="md:hidden py-24 px-4 bg-foreground">
-        <div className="flex flex-col gap-4">
-          {accordionItems.map((item, i) => (
-            <Link key={item.id} href={item.href} className="group relative h-48 w-full rounded-[2rem] overflow-hidden">
-              <Image src={item.image} alt={item.title} fill className="object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                <span className="text-white/40 font-mono text-xs mb-2">0{i + 1}</span>
-                <h2 className="text-2xl font-medium text-white">{item.title}</h2>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 2. FEATURED WORK (Asymmetrical Bento) */}
-      <section className="py-32 md:py-40 px-4 md:px-6 lg:px-8 bg-background relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-24"
-          >
-            <div>
-              <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-6xl font-medium tracking-tight">
-                Recent Work.
-              </motion.h2>
-            </div>
-
-            <motion.div variants={fadeUpVariant}>
-              <Link
-                href="/portfolio"
-                className="group inline-flex items-center gap-2 text-foreground hover:text-accent transition-colors font-medium"
-              >
-                View all projects
-                <ArrowRight size={16} className="transition-transform duration-500 ease-out group-hover:translate-x-1" />
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-            {featuredProjects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                variants={fadeUpVariant}
-                custom={i}
-                className={`${project.span} group cursor-pointer`}
-              >
-                <Link href={`/portfolio/${project.id}`} className="block h-full">
-                  {/* The Double-Bezel Shell */}
-                  <div
-                    className={`relative p-2 rounded-[2rem] bg-foreground/[0.02] border border-foreground/[0.05] h-full ${project.aspect} md:aspect-auto md:min-h-[450px]`}
-                  >
-                    {/* The Inner Core */}
-                    <div className="relative w-full h-full rounded-[calc(2rem-8px)] overflow-hidden bg-muted shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-                      <Image
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:scale-105"
-                      />
-                      {/* Overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-60 transition-opacity duration-700 ease-out group-hover:opacity-80" />
-
-                      {/* Floating Data Badge */}
-                      <div className="absolute top-6 left-6 md:top-8 md:left-8 flex gap-2">
-                        <span className="px-3 py-1.5 bg-background/90 backdrop-blur-md rounded-full text-[10px] uppercase tracking-wider font-semibold text-foreground shadow-sm">
-                          {project.category}
-                        </span>
-                      </div>
-
-                      {/* Content block inside image */}
-                      <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 translate-y-2 opacity-90 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-y-0 group-hover:opacity-100">
-                        <div className="flex items-end justify-between gap-4">
-                          <div>
-                            <h3 className="text-2xl md:text-3xl font-medium text-white mb-2">{project.title}</h3>
-                            <p className="text-white/70 text-sm md:text-base font-light max-w-sm">{project.description}</p>
-                          </div>
-                          <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white shrink-0 border border-white/20 transition-transform duration-700 group-hover:scale-110 group-hover:bg-white group-hover:text-black">
-                            <ArrowUpRight size={20} className="transition-transform duration-500 group-hover:rotate-45" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+            </section>
           </div>
-        </div>
-      </section>
-
-      {/* 3. SERVICES (Soft Structuralism / The Editorial Split) */}
-      <section className="py-32 md:py-48 px-4 md:px-6 lg:px-8 bg-secondary/30 border-y border-border/40 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
-            {/* Left: Sticky Massive Typo */}
-            <div className="lg:col-span-5 relative">
-              <div className="sticky top-32">
-                <motion.h2
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, ease, delay: 0.1 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-8 text-balance leading-[1.05]"
-                >
-                  What we do.
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, ease, delay: 0.2 }}
-                  className="text-foreground/60 text-lg max-w-md font-light leading-relaxed mb-10"
-                >
-                  We don't do everything. But what we do, we do exceptionally well. Strategy, design, and engineering under one roof.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, ease, delay: 0.3 }}
-                >
-                  <Link
-                    href="/services"
-                    className="group flex items-center gap-3 w-max px-6 py-4 bg-transparent border border-foreground/10 text-foreground rounded-full font-medium transition-all duration-500 hover:border-foreground/30 hover:bg-foreground/5 active:scale-[0.98]"
-                  >
-                    <span>Explore All Services</span>
-                    <div className="w-8 h-8 rounded-full bg-foreground/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                      <ArrowRight size={14} className="transition-transform duration-500 ease-out group-hover:translate-x-0.5" />
-                    </div>
-                  </Link>
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Right: Z-Axis Cascade / List */}
-            <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-6">
-              {services.map((service, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 40, scale: 0.98 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease, delay: index * 0.1 }}
-                  className="group relative p-2 rounded-[2rem] bg-background border border-border/50 transition-colors duration-500 hover:bg-foreground/[0.02] hover:border-foreground/10 shadow-sm hover:shadow-md"
-                >
-                  <div className="p-8 md:p-10 rounded-[calc(2rem-8px)] bg-transparent">
-                    <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8">
-                      <span className="text-sm font-semibold text-foreground/30 font-mono pt-1 md:pt-2">
-                        {service.num}
-                      </span>
-                      <div className="flex-1">
-                        <h3 className="text-2xl md:text-3xl font-medium mb-4 transition-colors duration-500 group-hover:text-accent">
-                          {service.title}
-                        </h3>
-                        <p className="text-foreground/60 leading-relaxed text-base md:text-lg font-light mb-8">
-                          {service.description}
-                        </p>
-                        <div className="overflow-hidden h-10 flex items-center">
-                          <Link
-                            href="/services"
-                            className="inline-flex items-center gap-3 text-sm font-medium text-foreground translate-y-12 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-y-0 group-hover:opacity-100"
-                          >
-                            <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-                              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
-                            </div>
-                            <span>Discover {service.title}</span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. IMMERSIVE CTA */}
-      <section className="relative py-40 md:py-56 px-4 md:px-6 lg:px-8 overflow-hidden flex items-center justify-center min-h-[80vh] border-t border-border/40">
-        {/* Deep background element */}
-        <div className="absolute inset-0 bg-foreground text-background" />
-
-        {/* Subtle radial gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.5)_0%,transparent_70%)] pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto text-center relative z-10 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.2, ease }}
-            className="flex flex-col items-center"
-          >
-            <h2 className="text-5xl md:text-7xl lg:text-[7rem] font-medium tracking-tight mb-8 leading-[0.95] text-balance">
-              Got a project? <br className="hidden md:block" />
-              <span className="italic font-light text-background/60">Let's talk.</span>
-            </h2>
-
-            <p className="text-lg md:text-xl text-background/70 mb-12 max-w-xl mx-auto font-light leading-relaxed">
-              We're currently taking on new projects. Drop us a line to get started.
-            </p>
-
-            <Link
-              href="/contact"
-              className="group flex items-center gap-4 px-8 py-5 bg-background text-foreground rounded-full font-medium text-lg transition-all duration-500 ease-out hover:scale-[0.98] active:scale-[0.95] shadow-2xl shadow-background/10"
-            >
-              <span>Get in touch</span>
-              <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:bg-accent group-hover:text-accent-foreground">
-                <ArrowUpRight size={18} className="transition-transform duration-500 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]" />
-              </div>
-            </Link>
-          </motion.div>
         </div>
       </section>
 

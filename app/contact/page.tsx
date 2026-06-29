@@ -1,143 +1,103 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import { ContactForm } from "@/components/contact-form"
 import { BookingForm } from "@/components/booking-form"
-import { Mail, Phone, MapPin, Clock } from "lucide-react"
+
+const faqs = [
+  {
+    question: "What's your typical project timeline?",
+    answer:
+      "Project timelines vary depending on scope and complexity. Most projects take 4-12 weeks from discovery to delivery.",
+  },
+  {
+    question: "Do you work with startups?",
+    answer:
+      "We love working with startups and have experience helping early-stage companies establish their brand and market presence.",
+  },
+  {
+    question: "What's your process for working with clients?",
+    answer:
+      "We follow a collaborative approach: discovery, strategy, creative development, implementation, and optimization. You're involved throughout.",
+  },
+  {
+    question: "Can you help with ongoing support?",
+    answer:
+      "Yes, we offer maintenance and support packages. Many of our clients work with us on a retainer basis.",
+  },
+]
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6 text-balance">Get in Touch</h1>
-          <p className="text-lg text-foreground/60 max-w-2xl">
-            Have a project in mind? We'd love to hear about it. Reach out and let's start a conversation.
-          </p>
+      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          <StaggerContainer>
+            <StaggerItem>
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-6">
+                Contact
+              </span>
+            </StaggerItem>
+            <StaggerItem>
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-4xl mb-8">
+                Get in Touch
+              </h1>
+            </StaggerItem>
+            <StaggerItem>
+              <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-xl">
+                Have a project in mind? We&apos;d love to hear about it. Reach out and let&apos;s start a conversation.
+              </p>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: Mail,
-                title: "Email",
-                content: "hello@studio.com",
-                description: "Send us an email anytime",
-              },
-              {
-                icon: Phone,
-                title: "Phone",
-                content: "+1 (555) 123-4567",
-                description: "Call us during business hours",
-              },
-              {
-                icon: MapPin,
-                title: "Location",
-                content: "San Francisco, CA",
-                description: "Visit our office",
-              },
-              {
-                icon: Clock,
-                title: "Hours",
-                content: "Mon - Fri, 9am - 6pm",
-                description: "Pacific Time",
-              },
-            ].map((item, index) => {
-              const Icon = item.icon
-              return (
-                <div key={index} className="space-y-3">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <Icon size={24} className="text-accent" />
-                  </div>
-                  <h3 className="font-medium text-foreground">{item.title}</h3>
-                  <p className="text-foreground/70 font-medium">{item.content}</p>
-                  <p className="text-sm text-foreground/60">{item.description}</p>
-                </div>
-              )
-            })}
-          </div>
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2">
+          <ScrollReveal className="px-6 md:px-12 py-16 md:py-24 border-b md:border-b-0 md:border-r border-neutral-900">
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-8">
+              Send a Message
+            </span>
+            <ContactForm />
+          </ScrollReveal>
+          <ScrollReveal delay={0.1} className="px-6 md:px-12 py-16 md:py-24">
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-8">
+              Schedule a Consultation
+            </span>
+            <BookingForm />
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Forms Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-light mb-8">Send us a Message</h2>
-              <ContactForm />
-            </div>
-
-            {/* Booking Form */}
-            <div>
-              <h2 className="text-3xl font-light mb-8">Schedule a Consultation</h2>
-              <BookingForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-light mb-12">Frequently Asked Questions</h2>
-
-          <div className="space-y-8">
-            {[
-              {
-                question: "What's your typical project timeline?",
-                answer:
-                  "Project timelines vary depending on scope and complexity. Most projects take 4-12 weeks from discovery to delivery. We'll provide a detailed timeline during our initial consultation.",
-              },
-              {
-                question: "Do you work with startups?",
-                answer:
-                  "We love working with startups and have experience helping early-stage companies establish their brand and market presence.",
-              },
-              {
-                question: "What's your process for working with clients?",
-                answer:
-                  "We follow a collaborative approach: discovery, strategy, creative development, implementation, and optimization. We keep you involved throughout the entire process.",
-              },
-              {
-                question: "Can you help with ongoing support?",
-                answer:
-                  "Yes, we offer ongoing support and maintenance services. Many of our clients work with us on a retainer basis for continuous optimization and updates.",
-              },
-              {
-                question: "How do you determine project pricing?",
-                answer:
-                  "Pricing depends on project scope, complexity, and timeline. We provide custom quotes after understanding your specific needs and goals.",
-              },
-              {
-                question: "What industries do you specialize in?",
-                answer:
-                  "We work across various industries including tech, e-commerce, healthcare, finance, and more. Our diverse experience helps us bring fresh perspectives to every project.",
-              },
-            ].map((item, index) => (
-              <div key={index} className="space-y-3 pb-8 border-b border-border last:border-b-0">
-                <h3 className="text-lg font-medium text-foreground">{item.question}</h3>
-                <p className="text-foreground/60 leading-relaxed">{item.answer}</p>
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+          <ScrollReveal>
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-12">
+              FAQ
+            </span>
+          </ScrollReveal>
+          <div className="space-y-0">
+            {faqs.map((item, i) => (
+              <div
+                key={i}
+                className="py-8 border-b border-neutral-900 last:border-b-0"
+              >
+                <ScrollReveal>
+                  <h3 className="text-base md:text-lg font-medium tracking-tight text-white mb-3">
+                    {item.question}
+                  </h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed font-light max-w-2xl">
+                    {item.answer}
+                  </p>
+                </ScrollReveal>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-foreground text-background">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-light mb-6">Ready to start your project?</h2>
-          <p className="text-lg text-background/70">
-            Fill out the form above or give us a call. We're excited to hear about your vision.
-          </p>
         </div>
       </section>
 

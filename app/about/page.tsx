@@ -1,185 +1,183 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import Link from "next/link"
 import Image from "next/image"
+
+const values = [
+  {
+    title: "Creativity",
+    description: "We believe in the power of creative thinking to solve problems and create meaningful experiences.",
+  },
+  {
+    title: "Integrity",
+    description: "We operate with honesty and transparency in all our relationships. We stand by our work.",
+  },
+  {
+    title: "Collaboration",
+    description: "The best work comes from working closely with clients. We value diverse perspectives.",
+  },
+  {
+    title: "Excellence",
+    description: "We're committed to delivering exceptional quality in everything we do. No shortcuts.",
+  },
+]
+
+const process = [
+  {
+    step: "01",
+    title: "Discovery",
+    description: "We deeply understand your business, market, and audience through research and workshops.",
+  },
+  {
+    step: "02",
+    title: "Strategy",
+    description: "We develop a comprehensive strategy aligned with your goals and define a clear roadmap.",
+  },
+  {
+    step: "03",
+    title: "Creation",
+    description: "Our team brings the strategy to life through design, content, and storytelling.",
+  },
+  {
+    step: "04",
+    title: "Delivery",
+    description: "We manage implementation and ensure a smooth launch with ongoing support.",
+  },
+]
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6 text-balance">About Studio</h1>
-          <p className="text-lg text-foreground/60 max-w-2xl">
-            We're a creative agency dedicated to helping brands succeed through thoughtful design, strategic thinking,
-            and exceptional execution.
-          </p>
+      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          <StaggerContainer>
+            <StaggerItem>
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-6">
+                About
+              </span>
+            </StaggerItem>
+            <StaggerItem>
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-4xl mb-8">
+                We build brands that outlast trends.
+              </h1>
+            </StaggerItem>
+            <StaggerItem>
+              <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-xl">
+                An independent design and development studio in Port Harcourt.
+                We don&apos;t follow trends. We build systems that scale and outlive the moment.
+              </p>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden">
+        <Image
+          src="/crve-bg.jpg"
+          alt="CRVE studio"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+      </section>
+
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2">
+          <ScrollReveal className="px-6 md:px-12 py-16 md:py-24 border-b md:border-b-0 md:border-r border-neutral-900">
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-4">
+              Our Story
+            </span>
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-white leading-[1.1]">
+              Founded in 2024, based in Port Harcourt.
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1} className="px-6 md:px-12 py-16 md:py-24 flex flex-col justify-between">
             <div className="space-y-6">
-              <h2 className="text-4xl font-light">Our Story</h2>
-              <p className="text-foreground/70 leading-relaxed">
-                Studio was founded in 2015 with a simple mission: to create meaningful work that helps brands connect
-                with their audiences. What started as a small team of passionate designers and strategists has grown
-                into a full-service creative agency.
+              <p className="text-sm md:text-base text-neutral-500 leading-relaxed font-light max-w-sm">
+                CRVE started with a simple belief: design should solve problems, not just look good.
+                What began as a small team of strategists and engineers has grown into a full-service
+                creative studio.
               </p>
-              <p className="text-foreground/70 leading-relaxed">
-                Over the years, we've had the privilege of working with startups, established brands, and everything in
-                between. Each project has taught us something new and shaped our approach to creative problem-solving.
-              </p>
-              <p className="text-foreground/70 leading-relaxed">
-                Today, we continue to push boundaries and explore new possibilities in design and strategy. We believe
-                that great work comes from collaboration, creativity, and a deep understanding of our clients' needs.
+              <p className="text-sm md:text-base text-neutral-500 leading-relaxed font-light max-w-sm">
+                We work with startups, established brands, and everything in between.
+                Each project teaches us something new and shapes our approach to creative problem-solving.
               </p>
             </div>
-            <div className="relative h-96 rounded-lg overflow-hidden">
-              <Image src="/about-story-image.jpg" alt="Studio office" fill className="object-cover" />
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-light mb-16">Our Values</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {[
-              {
-                title: "Creativity",
-                description:
-                  "We believe in the power of creative thinking to solve problems and create meaningful experiences. We encourage bold ideas and innovative approaches.",
-              },
-              {
-                title: "Integrity",
-                description:
-                  "We operate with honesty and transparency in all our relationships. We stand by our work and take responsibility for our results.",
-              },
-              {
-                title: "Collaboration",
-                description:
-                  "We believe the best work comes from working closely with our clients and team members. We value diverse perspectives and open communication.",
-              },
-              {
-                title: "Excellence",
-                description:
-                  "We're committed to delivering exceptional quality in everything we do. We pay attention to detail and never settle for mediocrity.",
-              },
-              {
-                title: "Growth",
-                description:
-                  "We're constantly learning and evolving. We embrace challenges as opportunities to grow and improve our craft.",
-              },
-              {
-                title: "Impact",
-                description:
-                  "We measure success by the impact our work has on our clients' businesses and their audiences. We create work that matters.",
-              },
-            ].map((value, index) => (
-              <div key={index} className="space-y-3">
-                <h3 className="text-2xl font-light">{value.title}</h3>
-                <p className="text-foreground/60 leading-relaxed">{value.description}</p>
-              </div>
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+          <ScrollReveal>
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-12">
+              Values
+            </span>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+            {values.map((value, i) => (
+              <ScrollReveal key={value.title} delay={i * 0.08}>
+                <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-sm text-neutral-500 leading-relaxed font-light">
+                  {value.description}
+                </p>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { number: "150+", label: "Projects Completed" },
-              { number: "50+", label: "Happy Clients" },
-              { number: "10+", label: "Years Experience" },
-              { number: "25+", label: "Team Members" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <p className="text-5xl font-light text-accent mb-2">{stat.number}</p>
-                <p className="text-foreground/60">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Approach Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-light mb-16">Our Approach</h2>
-
-          <div className="space-y-12">
-            {[
-              {
-                step: "01",
-                title: "Discovery & Research",
-                description:
-                  "We start by deeply understanding your business, market, and audience. Through research and workshops, we uncover insights that inform our strategy.",
-              },
-              {
-                step: "02",
-                title: "Strategy & Planning",
-                description:
-                  "We develop a comprehensive strategy that aligns with your goals. We create a clear roadmap for success and define key metrics.",
-              },
-              {
-                step: "03",
-                title: "Creative Development",
-                description:
-                  "Our creative team brings the strategy to life through design, content, and storytelling. We iterate and refine based on feedback.",
-              },
-              {
-                step: "04",
-                title: "Implementation & Launch",
-                description:
-                  "We manage the implementation process and ensure a smooth launch. We provide support and guidance throughout the rollout.",
-              },
-              {
-                step: "05",
-                title: "Measurement & Optimization",
-                description:
-                  "We track performance and gather insights. We continuously optimize and refine to ensure ongoing success.",
-              },
-            ].map((item, index) => (
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+          <ScrollReveal>
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-12">
+              Process
+            </span>
+          </ScrollReveal>
+          <div className="space-y-0">
+            {process.map((item, i) => (
               <div
-                key={index}
-                className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start pb-12 border-b border-border last:border-b-0"
+                key={item.step}
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 border-b border-neutral-900 last:border-b-0"
               >
-                <div>
-                  <p className="text-5xl font-light text-accent/50">{item.step}</p>
-                </div>
-                <div className="md:col-span-3 space-y-3">
-                  <h3 className="text-2xl font-light">{item.title}</h3>
-                  <p className="text-foreground/60 leading-relaxed">{item.description}</p>
-                </div>
+                <ScrollReveal className="md:col-span-1">
+                  <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-800">
+                    {item.step}
+                  </span>
+                </ScrollReveal>
+                <ScrollReveal delay={0.05} className="md:col-span-3">
+                  <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white">
+                    {item.title}
+                  </h3>
+                </ScrollReveal>
+                <ScrollReveal delay={0.1} className="md:col-span-8">
+                  <p className="text-sm text-neutral-500 leading-relaxed font-light max-w-lg">
+                    {item.description}
+                  </p>
+                </ScrollReveal>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-foreground text-background">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-light mb-6">Ready to work with us?</h2>
-          <p className="text-lg text-background/70 mb-8">
-            Let's discuss your project and explore how we can help bring your vision to life.
-          </p>
-          <a
-            href="/contact"
-            className="inline-block px-8 py-3 bg-accent text-accent-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
-          >
-            Get in Touch
-          </a>
-        </div>
+      <section className="border-t border-b border-neutral-900 py-10 md:py-12 px-6 md:px-12 text-center">
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
+        >
+          Start a Project
+          <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
+        </Link>
       </section>
 
       <Footer />

@@ -3,187 +3,221 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { PortfolioFilter } from "@/components/portfolio-filter"
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import Link from "next/link"
 import Image from "next/image"
 
+const projects = [
+  {
+    id: 1,
+    title: "Cowrywise Finance",
+    category: "Branding",
+    image: "/Orange_Juice_Bottle_Mockup_3.jpg.jpeg",
+    hoverImage: "/crve-hover-1.jpg",
+    year: "2024",
+  },
+  {
+    id: 2,
+    title: "Onchain Core",
+    category: "Design",
+    image: "/alive.png",
+    hoverImage: "/crve-hover-2.jpg",
+    year: "2024",
+  },
+  {
+    id: 3,
+    title: "Things Fall Apart",
+    category: "Strategy",
+    image: "/Tape Coiled Up in Spiral Mockup.jpg.jpeg",
+    hoverImage: null,
+    year: "2023",
+  },
+  {
+    id: 4,
+    title: "Brand Guidelines",
+    category: "Branding",
+    image: "/brand-guidelines.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 5,
+    title: "E-Commerce Platform",
+    category: "Design",
+    image: "/ecommerce-platform.jpg",
+    hoverImage: null,
+    year: "2023",
+  },
+  {
+    id: 6,
+    title: "Social Media Campaign",
+    category: "Strategy",
+    image: "/social-media-campaign.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 7,
+    title: "Mobile App Design",
+    category: "Design",
+    image: "/mobile-app-design.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 8,
+    title: "Corporate Rebrand",
+    category: "Branding",
+    image: "/corporate-rebrand.jpg",
+    hoverImage: null,
+    year: "2023",
+  },
+  {
+    id: 9,
+    title: "SaaS Platform",
+    category: "Development",
+    image: "/saas-platform-dashboard.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 10,
+    title: "E-Learning Portal",
+    category: "Development",
+    image: "/online-learning-platform.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 11,
+    title: "Fitness Tracking App",
+    category: "Development",
+    image: "/fitness-mobile-app.jpg",
+    hoverImage: null,
+    year: "2024",
+  },
+  {
+    id: 12,
+    title: "Social Commerce App",
+    category: "Development",
+    image: "/social-commerce-mobile-app.jpg",
+    hoverImage: null,
+    year: "2023",
+  },
+]
+
+const categories = ["All", "Branding", "Design", "Strategy", "Development"]
+
 export default function PortfolioPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selected, setSelected] = useState("All")
 
-  const projects = [
-    {
-      id: 1,
-      title: "Brand Identity System",
-      category: "Branding",
-      image: "/modern-brand-identity.png",
-      description: "Complete visual identity for a tech startup",
-      year: "2024",
-    },
-    {
-      id: 2,
-      title: "Digital Experience",
-      category: "Design",
-      image: "/digital-product-interface.png",
-      description: "Innovative digital product interface",
-      year: "2024",
-    },
-    {
-      id: 3,
-      title: "Campaign Strategy",
-      category: "Strategy",
-      image: "/vibrant-marketing-campaign.png",
-      description: "Integrated marketing campaign",
-      year: "2023",
-    },
-    {
-      id: 4,
-      title: "E-Commerce Platform",
-      category: "Design",
-      image: "/ecommerce-platform.jpg",
-      description: "Full-featured e-commerce website redesign",
-      year: "2023",
-    },
-    {
-      id: 5,
-      title: "Corporate Rebrand",
-      category: "Branding",
-      image: "/corporate-rebrand.jpg",
-      description: "Complete rebrand for established corporation",
-      year: "2023",
-    },
-    {
-      id: 6,
-      title: "Social Media Campaign",
-      category: "Strategy",
-      image: "/social-media-campaign.jpg",
-      description: "Multi-channel social media strategy and content",
-      year: "2024",
-    },
-    {
-      id: 7,
-      title: "Mobile App Design",
-      category: "Design",
-      image: "/mobile-app-design.jpg",
-      description: "iOS and Android app design system",
-      year: "2024",
-    },
-    {
-      id: 8,
-      title: "Brand Guidelines",
-      category: "Branding",
-      image: "/brand-guidelines.jpg",
-      description: "Comprehensive brand guidelines documentation",
-      year: "2023",
-    },
-    {
-      id: 9,
-      title: "SaaS Platform",
-      category: "Development",
-      image: "/saas-platform-dashboard.jpg",
-      description: "Full-stack SaaS application with real-time analytics",
-      year: "2024",
-    },
-    {
-      id: 10,
-      title: "E-Learning Portal",
-      category: "Development",
-      image: "/online-learning-platform.jpg",
-      description: "Interactive e-learning platform with course management",
-      year: "2024",
-    },
-    {
-      id: 11,
-      title: "Fitness Tracking App",
-      category: "App Development",
-      image: "/fitness-mobile-app.jpg",
-      description: "Cross-platform fitness tracking and workout app",
-      year: "2024",
-    },
-    {
-      id: 12,
-      title: "Social Commerce App",
-      category: "App Development",
-      image: "/social-commerce-mobile-app.jpg",
-      description: "Native iOS and Android social shopping application",
-      year: "2023",
-    },
-  ]
-
-  const categories = ["All", "Branding", "Design", "Strategy", "Development", "App Development"]
-
-  const filteredProjects =
-    selectedCategory === "All" ? projects : projects.filter((project) => project.category === selectedCategory)
+  const filtered = selected === "All" ? projects : projects.filter((p) => p.category === selected)
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6 text-balance">Our Work</h1>
-          <p className="text-lg text-foreground/60 max-w-2xl">
-            A collection of projects showcasing our expertise in branding, design, strategy, and development. Each
-            project represents our commitment to creative excellence.
-          </p>
+      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          <StaggerContainer>
+            <StaggerItem>
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-6">
+                Portfolio
+              </span>
+            </StaggerItem>
+            <StaggerItem>
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-4xl mb-8">
+                Our Work
+              </h1>
+            </StaggerItem>
+            <StaggerItem>
+              <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-xl">
+                A collection of projects showcasing our expertise in branding, design, strategy, and development.
+              </p>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
-      {/* Filter and Projects */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Filter Buttons */}
-          <PortfolioFilter categories={categories} onFilterChange={setSelectedCategory} />
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {filteredProjects.map((project) => (
-              <Link key={project.id} href={`/portfolio/${project.id}`} className="group cursor-pointer">
-                <div className="space-y-4">
-                  <div className="relative h-80 rounded-lg overflow-hidden bg-muted">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-accent font-medium">{project.category}</p>
-                      <p className="text-sm text-foreground/50">{project.year}</p>
-                    </div>
-                    <h3 className="text-2xl font-light group-hover:text-accent transition-colors">{project.title}</h3>
-                    <p className="text-foreground/60">{project.description}</p>
-                  </div>
-                </div>
-              </Link>
+      <section className="border-t border-neutral-900">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex gap-6 py-6 border-b border-neutral-900 overflow-x-auto">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelected(cat)}
+                className={`text-xs font-medium uppercase tracking-[0.2em] whitespace-nowrap transition-colors ${
+                  selected === cat ? "text-white" : "text-neutral-600 hover:text-neutral-400"
+                }`}
+              >
+                {cat}
+              </button>
             ))}
           </div>
 
-          {/* Empty State */}
-          {filteredProjects.length === 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 py-10">
+            {filtered.map((project, i) => (
+              <ScrollReveal key={project.id} delay={i * 0.06} y={20}>
+                <div className="group cursor-pointer">
+                  <div className="relative w-full aspect-square overflow-hidden bg-neutral-950">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover img-primary"
+                    />
+                    {project.hoverImage ? (
+                      <Image
+                        src={project.hoverImage}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover img-secondary"
+                      />
+                    ) : (
+                      <div className="img-secondary bg-black/90 flex items-center justify-center">
+                        <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-700">
+                          View Project
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-4 flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-base md:text-lg font-medium tracking-tight text-neutral-600 group-hover:text-white transition-colors">
+                        {project.title}
+                      </h3>
+                      <span className="text-xs text-neutral-700 font-mono mt-1 block">
+                        {project.category}
+                      </span>
+                    </div>
+                    <span className="text-xs text-neutral-700 font-mono shrink-0">
+                      {project.year}
+                    </span>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {filtered.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-foreground/60 text-lg">No projects found in this category.</p>
+              <p className="text-neutral-600 text-sm">No projects found in this category.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-foreground text-background">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-light mb-6">Interested in working together?</h2>
-          <p className="text-lg text-background/70 mb-8">
-            Let's discuss your project and explore how we can help bring your vision to life.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-8 py-3 bg-accent text-accent-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
-          >
-            Start a Project
-          </Link>
-        </div>
+      <section className="border-t border-b border-neutral-900 py-10 md:py-12 px-6 md:px-12 text-center">
+        <Link
+          href="/contact"
+          className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
+        >
+          Start a Project
+          <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
+        </Link>
       </section>
 
       <Footer />
