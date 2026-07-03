@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { IntroAnimation } from "@/components/intro-animation"
@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   icons: {
     icon: "/crve.ico",
   },
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({

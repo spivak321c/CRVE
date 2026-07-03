@@ -27,6 +27,44 @@ export function ScrollReveal({ children, className, delay = 0, y = 24, duration 
   )
 }
 
+interface WordRevealProps {
+  text: string
+  className?: string
+  stagger?: number
+  tag?: "p" | "span" | "div"
+}
+
+export function WordReveal({ text, className, stagger = 0.06, tag = "span" }: WordRevealProps) {
+  const words = text.split(" ")
+  const Component = motion[tag]
+
+  return (
+    <Component
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: stagger } },
+      }}
+      className={className}
+    >
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          className="inline-block"
+          variants={{
+            hidden: { opacity: 0, y: 8 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease } },
+          }}
+        >
+          {word}{i < words.length - 1 ? "\u00A0" : ""}
+        </motion.span>
+      ))}
+    </Component>
+  )
+}
+
 interface StaggerRevealProps {
   children: React.ReactNode
   className?: string

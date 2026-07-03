@@ -119,8 +119,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    width: 100%;
+  }
   body {
     @apply bg-background text-foreground;
+    touch-action: manipulation;
+    overflow-x: clip;
   }
 }
 
@@ -138,6 +146,9 @@
 .hero-line {
   position: relative;
   color: #fff;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .hero-line::before {
@@ -248,4 +259,9 @@
 @keyframes drift-3 {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(1px, -2px); }
+}
+
+.divider-thin {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }

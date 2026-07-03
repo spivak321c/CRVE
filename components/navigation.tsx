@@ -40,8 +40,8 @@ export function Navigation() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-20 md:h-24">
-            <Link href="/" className="text-lg md:text-3xl font-extrabold tracking-tight text-white" onClick={closeMenu}>
-              CRVE<span className="text-neutral-600">.</span>
+            <Link href="/" className="shrink-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white" onClick={closeMenu}>
+              CRVE<span className="text-[#a6a6a6]">.</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-10">
@@ -49,7 +49,7 @@ export function Navigation() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="nav-link text-xs font-medium uppercase tracking-widest text-neutral-500 hover:text-white"
+                  className="nav-link text-xs font-medium uppercase tracking-widest text-[#a6a6a6] hover:text-white"
                 >
                   {item.label}
                 </Link>
@@ -68,7 +68,7 @@ export function Navigation() {
               className="md:hidden relative z-50 text-white"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function Navigation() {
                 >
                   <Link
                     href={item.href}
-                    className="text-4xl font-medium tracking-tight text-white hover:text-neutral-500 transition-colors"
+                    className="text-4xl font-medium tracking-tight text-white hover:text-white/50 transition-colors"
                     onClick={closeMenu}
                   >
                     {item.label}
@@ -105,7 +105,7 @@ export function Navigation() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.4 }}
-                className="mt-6 pt-6 border-t border-neutral-900"
+                className="mt-6 pt-6 border-t border-white/[0.08]"
               >
                 <Link
                   href="/contact"

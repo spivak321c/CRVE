@@ -2,166 +2,106 @@
 
 import { useState } from "react"
 
+const pricing = [
+  {
+    id: "brand",
+    category: "Brand and Identity Design",
+    tiers: [
+      { name: "Tier 1", price: 850, desc: "Essential brand identity package" },
+      { name: "Tier 2", price: 1500, desc: "Comprehensive brand system" },
+      { name: "Tier 3", price: 3000, desc: "Full brand strategy & identity" },
+    ],
+  },
+  {
+    id: "web",
+    category: "Web & App Development",
+    tiers: [
+      { name: "Tier 1", price: 1250, desc: "Single page or basic site" },
+      { name: "Tier 2", price: 15000, desc: "Multi-page web application" },
+      { name: "Tier 3", price: 22000, desc: "Full-featured platform" },
+    ],
+  },
+  {
+    id: "video",
+    category: "Video Production",
+    tiers: [
+      { name: "Tier 1", price: 10000, desc: "Short-form content" },
+      { name: "Tier 2", price: 20000, desc: "Campaign video" },
+      { name: "Tier 3", price: 50000, desc: "Full production & post" },
+    ],
+  },
+]
+
 export function PricingCalculator() {
-  const [selectedServices, setSelectedServices] = useState<string[]>([])
-  const [expandedService, setExpandedService] = useState<string | null>(null)
+  const [selections, setSelections] = useState<Record<string, number>>({})
 
-  const services = [
-    {
-      id: "brand-strategy",
-      name: "Brand Strategy",
-      basePrice: 3000,
-      description: "Market research, positioning, and brand guidelines",
-    },
-    {
-      id: "visual-identity",
-      name: "Visual Identity",
-      basePrice: 4000,
-      description: "Logo design, color palette, and visual system",
-    },
-    {
-      id: "digital-design",
-      name: "Digital Design",
-      basePrice: 5000,
-      description: "UX/UI design for websites and applications",
-    },
-    {
-      id: "web-development",
-      name: "Web Development",
-      basePrice: 8000,
-      description: "Full-stack web applications and responsive websites",
-    },
-    {
-      id: "app-development",
-      name: "App Development",
-      basePrice: 12000,
-      description: "Native and cross-platform mobile applications",
-    },
-    {
-      id: "content-strategy",
-      name: "Content Strategy",
-      basePrice: 2500,
-      description: "Content planning, copywriting, and SEO optimization",
-    },
-    {
-      id: "marketing-campaign",
-      name: "Marketing Campaign",
-      basePrice: 6000,
-      description: "Integrated campaigns across multiple channels",
-    },
-    {
-      id: "brand-consulting",
-      name: "Brand Consulting",
-      basePrice: 4500,
-      description: "Expert guidance on brand development and evolution",
-    },
-  ]
-
-  const toggleService = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId) ? prev.filter((id) => id !== serviceId) : [...prev, serviceId],
-    )
+  const select = (categoryId: string, tierIndex: number) => {
+    setSelections((prev) => ({ ...prev, [categoryId]: tierIndex }))
   }
 
-  const totalPrice = selectedServices.reduce((sum, serviceId) => {
-    const service = services.find((s) => s.id === serviceId)
-    return sum + (service?.basePrice || 0)
+  const selectedCount = Object.keys(selections).length
+  const total = pricing.reduce((sum, cat) => {
+    const idx = selections[cat.id]
+    if (idx === undefined) return sum
+    return sum + cat.tiers[idx].price
   }, 0)
 
-  const discount = selectedServices.length > 3 ? Math.floor(totalPrice * 0.1) : 0
-  const finalPrice = totalPrice - discount
-
   return (
-    <div className="space-y-8">
-      {/* Services Selection */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-foreground">Select Services</h3>
-        <div className="space-y-3">
-          {services.map((service) => (
-            <div key={service.id} className="border border-border rounded-lg overflow-hidden">
-              <button
-                onClick={() => toggleService(service.id)}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-4 text-left">
-                  <input
-                    type="checkbox"
-                    checked={selectedServices.includes(service.id)}
-                    onChange={() => {}}
-                    className="w-5 h-5 rounded border-border cursor-pointer"
-                  />
-                  <div>
-                    <p className="font-medium text-foreground">{service.name}</p>
-                    <p className="text-sm text-foreground/60">{service.description}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-semibold text-accent">${service.basePrice.toLocaleString()}</p>
-                </div>
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Pricing Summary */}
-      <div className="bg-secondary/30 rounded-lg p-8 space-y-6">
-        <h3 className="text-lg font-semibold text-foreground">Pricing Summary</h3>
-
-        {selectedServices.length === 0 ? (
-          <p className="text-foreground/60">Select services to see pricing</p>
-        ) : (
-          <div className="space-y-4">
-            {/* Selected Services Breakdown */}
-            <div className="space-y-2 pb-4 border-b border-border">
-              {selectedServices.map((serviceId) => {
-                const service = services.find((s) => s.id === serviceId)
+    <div>
+      <div className="divide-y divide-white/[0.08]">
+        {pricing.map((cat) => (
+          <div key={cat.id} className="py-10 first:pt-0">
+            <h3 className="text-sm font-medium tracking-tight text-white mb-6">
+              {cat.category}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {cat.tiers.map((tier, i) => {
+                const selected = selections[cat.id] === i
                 return (
-                  <div key={serviceId} className="flex justify-between text-sm">
-                    <span className="text-foreground/70">{service?.name}</span>
-                    <span className="text-foreground">${service?.basePrice.toLocaleString()}</span>
-                  </div>
+                  <button
+                    key={tier.name}
+                    onClick={() => select(cat.id, i)}
+                    className={`text-left border px-6 py-6 transition-all duration-300 ${
+                      selected
+                        ? "border-white bg-white/5"
+                        : "border-white/[0.08] hover:border-white/30"
+                    }`}
+                  >
+                    <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#a6a6a6] block mb-2">
+                      {tier.name}
+                    </span>
+                    <span className={`text-2xl md:text-3xl font-extrabold tracking-tight block mb-2 ${
+                      selected ? "text-white" : "text-white"
+                    }`}>
+                      ${tier.price.toLocaleString()}
+                    </span>
+                    <span className="text-xs text-white/40 leading-relaxed block">
+                      {tier.desc}
+                    </span>
+                  </button>
                 )
               })}
             </div>
-
-            {/* Subtotal */}
-            <div className="flex justify-between">
-              <span className="text-foreground/70">Subtotal</span>
-              <span className="text-foreground">${totalPrice.toLocaleString()}</span>
-            </div>
-
-            {/* Discount */}
-            {discount > 0 && (
-              <div className="flex justify-between text-accent">
-                <span className="text-foreground/70">Discount (10% for 4+ services)</span>
-                <span>-${discount.toLocaleString()}</span>
-              </div>
-            )}
-
-            {/* Final Price */}
-            <div className="flex justify-between pt-4 border-t border-border">
-              <span className="font-semibold text-foreground">Total Estimate</span>
-              <span className="text-2xl font-semibold text-accent">${finalPrice.toLocaleString()}</span>
-            </div>
-
-            {/* Note */}
-            <p className="text-xs text-foreground/60 pt-4">
-              *This is an estimate. Final pricing may vary based on project scope and complexity. Contact us for a
-              detailed quote.
-            </p>
           </div>
-        )}
+        ))}
       </div>
 
-      {/* CTA */}
-      {selectedServices.length > 0 && (
-        <div className="pt-4">
+      {selectedCount > 0 && (
+        <div className="border-t border-white/[0.08] pt-8 mt-4">
+          <div className="flex items-center justify-between mb-8">
+            <span className="text-sm font-medium tracking-tight text-white/40">
+              Total Estimate
+            </span>
+            <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+              ${total.toLocaleString()}
+            </span>
+          </div>
           <a
             href="/contact"
-            className="w-full block text-center px-8 py-3 bg-accent text-accent-foreground rounded-full font-medium hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
           >
             Get a Custom Quote
+            <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
           </a>
         </div>
       )}

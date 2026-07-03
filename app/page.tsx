@@ -1,128 +1,270 @@
 "use client"
 
+import { ReactLenis } from "lenis/react"
+import type { LenisRef } from "lenis/react"
+import { cancelFrame, frame } from "framer-motion"
+import { useEffect, useRef } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ScrollBackground } from "@/components/scroll-background"
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import { ScrollReveal, WordReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const ease = [0.25, 1, 0.5, 1] as const
+
+const services = [
+  {
+    id: "01",
+    title: "Brand Strategy",
+    description:
+      "We develop comprehensive brand strategies that define your unique position. From market research to positioning, we build a foundation for all creative work.",
+    features: ["Market Research", "Brand Positioning", "Competitive Analysis", "Messaging Framework"],
+  },
+  {
+    id: "02",
+    title: "Visual Identity",
+    description:
+      "Creating distinctive visual identities that make your brand memorable. Logos, color systems, typography, and all visual elements.",
+    features: ["Logo Design", "Color Systems", "Typography", "Brand Asset Library"],
+  },
+  {
+    id: "03",
+    title: "Digital Design",
+    description:
+      "Beautiful and functional digital experiences. From websites to applications, interfaces that engage users and drive results.",
+    features: ["UX/UI Design", "Website Design", "App Design", "Design Systems"],
+  },
+  {
+    id: "04",
+    title: "Web Development",
+    description:
+      "Fast, scalable, and secure web applications using modern technologies. Responsive websites to complex platforms.",
+    features: ["Full-Stack Development", "Performance Optimization", "API Development", "Database Architecture"],
+  },
+  {
+    id: "05",
+    title: "App Development",
+    description:
+      "Native and cross-platform mobile applications that users love. From concept to launch, the entire development lifecycle.",
+    features: ["iOS Development", "Android Development", "Cross-Platform", "App Store Optimization"],
+  },
+  {
+    id: "06",
+    title: "Content Strategy",
+    description:
+      "Strategic content that tells your story and engages your audience. Content strategies aligned with business goals.",
+    features: ["Content Audit", "Strategy Development", "Copywriting", "SEO Optimization"],
+  },
+]
 
 const projects = [
   {
     id: "001",
-    title: "Cowrywise Finance",
+    title: "Fruity Signature",
     category: "Brand Identity",
     year: "2024",
-    image: "/Orange_Juice_Bottle_Mockup_3.jpg.jpeg",
-    hoverImage: "/crve-hover-1.jpg",
+    images: [
+      "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_3.png",
+      "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_1-Recovered.png",
+      "/websites/Fruity%20Signature/Sign_Mockup.jpg",
+    ],
   },
   {
     id: "002",
-    title: "Onchain Core",
-    category: "Digital Experience",
+    title: "Alive Concert",
+    category: "Campaign",
     year: "2024",
-    image: "/alive.png",
-    hoverImage: "/crve-hover-2.jpg",
+    images: ["/websites/Alive/ALIVE.png"],
   },
   {
     id: "003",
-    title: "Things Fall Apart",
-    category: "Campaign Strategy",
-    year: "2023",
-    image: "/Tape Coiled Up in Spiral Mockup.jpg.jpeg",
-    hoverImage: null,
+    title: "Sabur Energy Foundation",
+    category: "Brand Identity",
+    year: "2024",
+    images: [
+      "/websites/Sabur%20Energy/Free_Large_Banner_Mockup_2.png",
+      "/websites/Sabur%20Energy/Billboard_Mockup_2.jpg",
+      "/websites/Sabur%20Energy/02%20Free%20Closeup%20iPhone%2015%20Pro%20Max%20Mockup.jpg",
+    ],
   },
   {
     id: "004",
-    title: "Brand Guidelines",
-    category: "Visual Identity",
+    title: "Flow",
+    category: "Brand Identity",
     year: "2024",
-    image: "/brand-guidelines.jpg",
-    hoverImage: null,
+    images: [
+      "/websites/Flow/Artboard%201.jpg",
+      "/websites/Flow/Artboard%202.jpg",
+      "/websites/Flow/Artboard%203.jpg",
+    ],
   },
 ]
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function Home() {
+  const lenisRef = useRef<LenisRef>(null)
+
+  useEffect(() => {
+    function update(data: { timestamp: number }) {
+      lenisRef.current?.lenis?.raf(data.timestamp)
+    }
+    frame.update(update, true)
+    return () => cancelFrame(update)
+  }, [])
+
+  useEffect(() => {
+    const lenis = lenisRef.current?.lenis
+    if (!lenis) return
+
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        if (arguments.length > 0 && typeof value === "number") {
+          lenis.scrollTo(value, { immediate: true })
+        }
+        return lenis.animatedScroll
+      },
+      getBoundingClientRect() {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight }
+      },
+      pinType: document.body.style.transform ? "transform" : "fixed",
+    })
+
+    const scrollUpdate = () => ScrollTrigger.update()
+    lenis.on("scroll", scrollUpdate)
+
+    setTimeout(() => ScrollTrigger.refresh(), 200)
+
+    return () => {
+      lenis.off("scroll", scrollUpdate)
+      ScrollTrigger.getAll().forEach((t) => t.kill())
+    }
+  }, [])
+
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
-      <ScrollBackground />
-      <Navigation />
+    <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
+      <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+        <ScrollBackground />
+        <Navigation />
 
-      {/* HERO */}
-      <section className="relative min-h-[80vh] md:min-h-screen flex items-center pt-28 pb-12 px-6 md:px-12 overflow-hidden">
-        <div className="absolute inset-0 bg-black z-0" />
-        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
-        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,#1a1a1a_0%,transparent_70%)]" />
-
-        <div className="max-w-[1400px] mx-auto w-full relative z-10">
-          <StaggerContainer>
-            <StaggerItem>
-              <span className="text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 mb-12 block">
-                Port Harcourt Rivers &mdash; Est. 2024
-              </span>
-            </StaggerItem>
-
-            <StaggerItem>
-              <h1 className="text-[clamp(48px,10vw,120px)] font-extrabold leading-[1.0] tracking-[-0.05em] text-white max-w-5xl">
-                <span className="block hero-line" data-text="Digital products.">Digital products.</span>
-                <span className="block hero-line" data-text="Brand systems.">Brand systems.</span>
-                <span className="block hero-line" data-text="Creative motion.">Creative motion.</span>
-              </h1>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
-                <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-md">
-                  An independent design and development studio. We build things people actually want to use.
-                </p>
-                <div className="flex flex-col items-start md:items-end">
-                  <Link
-                    href="/portfolio"
-                    className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
-                  >
-                    View Our Work
-                    <span className="inline-block w-12 h-px bg-white group-hover:w-20 transition-all duration-500" />
-                  </Link>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800 mt-4">
-                    Scroll to explore
-                  </span>
-                </div>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* FULL-BLEED REVEAL - Lined paper style with image */}
-      <section className="relative">
-        <div className="sticky top-0 h-screen w-full overflow-hidden">
-          <Image
-            src="/crve-bg.jpg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/90" />
-        </div>
-
-        <div className="relative z-10">
-          <div className="min-h-screen flex flex-col justify-end px-6 md:px-12 pb-16 md:pb-20">
-            <div className="max-w-[1400px] mx-auto w-full">
-              <ScrollReveal>
-                <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/60">
-                  Selected Work
-                </span>
-              </ScrollReveal>
-            </div>
+        {/* HERO */}
+        <section className="relative h-screen overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src="/video1.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/60" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,#000_100%)]" />
           </div>
 
+          <div className="absolute top-0 left-0 w-full h-full flex items-center pt-28 pb-12 px-6 md:px-12 z-10">
+            <div className="max-w-[1400px] mx-auto w-full">
+              <StaggerContainer>
+                <StaggerItem>
+                  <span className="text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 mb-12 block">
+                    Port Harcourt Rivers &mdash; Est. 2024
+                  </span>
+                </StaggerItem>
+
+                <StaggerItem>
+                  <h1 className="text-[clamp(36px,8vw,88px)] font-extrabold leading-[1.05] tracking-[-0.04em] text-white max-w-full break-words">
+                    {["Digital products.", "Brand systems.", "Creative motion."].map((line) => (
+                      <span key={line} className="block hero-line overflow-hidden" data-text={line}>
+                        {line.split(" ").map((word, i, arr) => (
+                          <span
+                            key={i}
+                            className="inline-block"
+                            style={{ opacity: 0.9 - i * 0.05 }}
+                          >
+                            {word}{i < arr.length - 1 ? " " : ""}
+                          </span>
+                        ))}
+                      </span>
+                    ))}
+                  </h1>
+                </StaggerItem>
+
+                <StaggerItem>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
+                    <div className="text-base md:text-lg text-neutral-400 leading-relaxed md:font-light max-w-md">
+                      <WordReveal text="An independent design and development studio. We build things people actually want to use." />
+                    </div>
+                    <div className="flex flex-col items-start md:items-end">
+                      <Link
+                        href="/portfolio"
+                        className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
+                      >
+                        View Our Work
+                        <span className="inline-block w-12 h-px bg-white group-hover:w-20 transition-all duration-500" />
+                      </Link>
+                      <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800 mt-4">
+                        Scroll to explore
+                      </span>
+                    </div>
+                  </div>
+                </StaggerItem>
+              </StaggerContainer>
+            </div>
+          </div>
+        </section>
+
+        {/* FEATURED PROJECTS HEADING */}
+        <section className="relative py-24 md:py-32 px-6 md:px-12">
+          <div className="max-w-[1400px] mx-auto w-full">
+            <ScrollReveal>
+              <div className="flex items-center gap-4">
+                <span className="w-8 h-px bg-white/30" />
+                <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">
+                  Featured Projects
+                </span>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* STICKY STACKED CARDS (CSS sticky) */}
+        <section className="relative">
+          {projects.map((project, i) => (
+            <div
+              key={project.id}
+              className="sticky top-0 h-screen w-full overflow-hidden"
+              style={{ zIndex: i + 1 }}
+            >
+              <div className="relative w-full h-[110%] -translate-y-[5%]">
+                <Image
+                  src={project.images[0]}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                  priority={i === 0}
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent via-50% to-black/40" />
+              <div className="absolute bottom-12 right-8 md:right-12 text-right">
+                <span className="text-xs font-mono text-white/40 block">{project.id}</span>
+                <h3 className="text-lg md:text-xl font-medium text-white">{project.title}</h3>
+                <span className="text-xs text-white/30 font-mono">{project.category}</span>
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* LOWER CONTENT */}
+        <section className="relative bg-black">
           <div className="bg-black">
             {/* TICKER */}
-            <div className="border-t border-b border-neutral-900 overflow-hidden py-4">
+            <div className="border-t border-b border-white/[0.08] overflow-hidden py-4">
               <div className="animate-marquee whitespace-nowrap flex">
                 <div className="inline-flex gap-16 shrink-0">
                   {["Brand Identity", "Product Design", "Motion Graphics", "Web Engineering", "Digital Strategy"].map(
@@ -145,70 +287,71 @@ export default function Home() {
               </div>
             </div>
 
-            {/* SELECTED WORK */}
-            <section className="border-t border-neutral-900">
+            {/* SERVICES */}
+            <section className="border-t border-white/[0.08]">
               <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-                <div className="flex justify-between items-center py-8 border-b border-neutral-900">
-                  <h2 className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600">
-                    Selected Work
+                <ScrollReveal>
+                  <h2 className="text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-600 py-8">
+                    Services
                   </h2>
-                  <Link href="/portfolio" className="nav-link text-xs font-medium text-neutral-600 hover:text-white uppercase tracking-widest">
-                    View all
-                  </Link>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 py-10">
-                  {projects.map((project, i) => (
-                    <ScrollReveal key={project.id} delay={i * 0.1} y={20}>
-                      <div className="group cursor-pointer">
-                        <div className="relative w-full aspect-square overflow-hidden bg-neutral-950">
-                          <Image
-                            src={project.image}
-                            alt={project.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover img-primary"
-                          />
-                          {project.hoverImage ? (
-                            <Image
-                              src={project.hoverImage}
-                              alt=""
-                              fill
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover img-secondary"
-                            />
-                          ) : (
-                            <div className="img-secondary bg-black/90 flex items-center justify-center">
-                              <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-700">
-                                View Project
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="mt-4 flex justify-between items-start gap-4">
-                          <div>
-                            <h3 className="text-base md:text-lg font-medium tracking-tight text-neutral-600 group-hover:text-white transition-colors">
-                              {project.title}
-                            </h3>
-                            <span className="text-xs text-neutral-700 font-mono mt-1 block">
-                              {project.id} / {project.category}
-                            </span>
-                          </div>
-                          <span className="text-xs text-neutral-700 font-mono shrink-0">
-                            {project.year}
+                </ScrollReveal>
+              </div>
+              <div className="max-w-[1400px] mx-auto">
+                <div className="space-y-0">
+                  {services.map((service) => (
+                    <div
+                      key={service.id}
+                      className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-t border-white/[0.08] overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] scale-x-0 group-hover:scale-x-100 origin-left" />
+                      <div className="relative z-10 md:col-span-1">
+                        <ScrollReveal>
+                          <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-800 group-hover:text-black transition-colors duration-500">
+                            {service.id}
                           </span>
-                        </div>
+                        </ScrollReveal>
                       </div>
-                    </ScrollReveal>
+                      <div className="relative z-10 md:col-span-4">
+                        <ScrollReveal delay={0.05}>
+                          <h2 className="text-xl md:text-2xl font-medium tracking-tight text-white group-hover:text-black mb-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+                            {service.title}
+                          </h2>
+                          <p className="text-sm text-neutral-400 group-hover:text-neutral-600 leading-relaxed transition-colors duration-500">
+                            {service.description}
+                          </p>
+                        </ScrollReveal>
+                      </div>
+                      <div className="relative z-10 md:col-span-5">
+                        <ScrollReveal delay={0.1}>
+                          <ul className="space-y-2">
+                            {service.features.map((feature, i) => (
+                              <li key={i} className="text-xs text-neutral-600 group-hover:text-neutral-700 font-mono transition-colors duration-500">
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </ScrollReveal>
+                      </div>
+                      <div className="relative z-10 md:col-span-2 flex md:justify-end">
+                        <ScrollReveal delay={0.15}>
+                          <Link
+                            href="/contact"
+                            className="nav-link text-xs font-medium uppercase tracking-[0.2em] text-neutral-500 group-hover:text-black transition-colors duration-500"
+                          >
+                            Inquire
+                          </Link>
+                        </ScrollReveal>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             </section>
 
             {/* MANIFESTO */}
-            <section className="border-t border-neutral-900">
+            <section className="border-t border-white/[0.08]">
               <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2">
-                <ScrollReveal className="px-6 md:px-12 py-16 md:py-24 border-b md:border-b-0 md:border-r border-neutral-900">
+                <ScrollReveal className="px-6 md:px-12 py-16 md:py-24 border-b md:border-b-0 md:border-r border-white/[0.08]">
                   <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-4">
                     Manifesto
                   </span>
@@ -217,7 +360,7 @@ export default function Home() {
                   </h2>
                 </ScrollReveal>
                 <ScrollReveal delay={0.1} className="px-6 md:px-12 py-16 md:py-24 flex flex-col justify-between">
-                  <p className="text-sm md:text-base text-neutral-500 leading-relaxed font-light max-w-sm">
+                  <p className="text-sm md:text-base text-neutral-400 leading-relaxed max-w-sm">
                     CRVE is an independent studio in Port Harcourt. We don&apos;t subscribe to fleeting trends. Every system we build is designed to scale and outlive the moment.
                   </p>
                   <Link
@@ -232,7 +375,7 @@ export default function Home() {
             </section>
 
             {/* CTA */}
-            <section className="border-t border-b border-neutral-900 py-10 md:py-12 px-6 md:px-12 text-center">
+            <section className="border-t border-b border-white/[0.08] py-10 md:py-12 px-6 md:px-12 text-center">
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
@@ -242,10 +385,10 @@ export default function Home() {
               </Link>
             </section>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </ReactLenis>
   )
 }

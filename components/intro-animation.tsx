@@ -21,13 +21,13 @@ export function IntroAnimation({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
       {!introDone && (
-        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none">
-          <div className="flex items-center justify-center gap-0">
+        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="flex items-center justify-center gap-0 px-4 max-w-full">
             {letters.map((letter, i) => (
               <motion.span
                 key={i}
                 className="text-white font-extrabold tracking-tight select-none inline-block"
-                style={{ fontSize: "clamp(140px, 28vw, 480px)", lineHeight: 1 }}
+                style={{ fontSize: "clamp(48px, 18vw, 480px)", lineHeight: 1 }}
                 initial={{ opacity: 0, y: -200 }}
                 animate={
                   ready

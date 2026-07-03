@@ -8,110 +8,98 @@ import Link from "next/link"
 
 const teamMembers = [
   {
-    name: "Sarah Johnson",
-    role: "Creative Director",
-    bio: "Visionary leader with 12+ years of experience in brand strategy and creative direction.",
-    image: "/placeholder-user.jpg",
+    name: "Kuch",
+    role: "Product Designer",
+    bio: "Crafting interfaces that feel intuitive and look exceptional. Focused on user-centered design systems and visual storytelling.",
+    image: "/kuch.jpg",
   },
   {
-    name: "Marcus Chen",
-    role: "Lead Designer",
-    bio: "Passionate designer focused on creating beautiful and functional digital experiences.",
-    image: "/placeholder-user.jpg",
-  },
-  {
-    name: "Emma Rodriguez",
-    role: "Brand Strategist",
-    bio: "Strategic thinker specializing in brand positioning and market research.",
-    image: "/placeholder-user.jpg",
-  },
-  {
-    name: "James Wilson",
-    role: "Content Strategist",
-    bio: "Storyteller and strategist crafting compelling narratives for brands.",
-    image: "/placeholder-user.jpg",
-  },
-  {
-    name: "Lisa Park",
-    role: "Project Manager",
-    bio: "Organized professional ensuring projects run smoothly from start to finish.",
-    image: "/placeholder-user.jpg",
-  },
-  {
-    name: "David Thompson",
-    role: "Digital Strategist",
-    bio: "Expert in digital marketing and campaign strategy with proven results.",
-    image: "/placeholder-user.jpg",
+    name: "Andre",
+    role: "Fullstack Developer",
+    bio: "Building fast, scalable applications from database to UI. Passionate about clean architecture and performance.",
+    image: "/andre.jpeg",
   },
 ]
 
-const culture = [
+const values = [
   {
-    title: "Collaboration",
-    description: "The best ideas come from diverse perspectives and open collaboration.",
+    title: "Craft",
+    description: "Every pixel, every line of code, every interaction is deliberate. We sweat the details others overlook.",
   },
   {
-    title: "Creativity",
-    description: "We foster an environment where creativity thrives and experimentation is encouraged.",
+    title: "Honesty",
+    description: "Transparent communication, realistic timelines, and no hidden agendas. Trust is the foundation of great work.",
   },
   {
-    title: "Excellence",
-    description: "Quality and attention to detail are non-negotiable in everything we deliver.",
+    title: "Growth",
+    description: "We grow with every project. Our studio evolves by staying curious and pushing our own boundaries.",
   },
 ]
 
 export default function TeamPage() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
       <Navigation />
 
-      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[length:32px_32px]" />
+      {/* Hero */}
+      <section className="relative pt-32 pb-16 md:pb-24 px-6 md:px-12 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[60vw] h-full flex items-start justify-end pointer-events-none select-none">
+          <span className="text-[clamp(150px,25vw,400px)] font-extrabold leading-[0.8] tracking-[-0.06em] text-white/[0.015]">
+            Team
+          </span>
+        </div>
         <div className="max-w-[1400px] mx-auto relative z-10">
           <StaggerContainer>
             <StaggerItem>
-              <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-6">
-                Team
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-[#a6a6a6] block mb-6">
+                The People
               </span>
             </StaggerItem>
             <StaggerItem>
-              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-4xl mb-8">
-                Meet Our Team
+              <h1 className="text-[clamp(32px,8vw,88px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-full mb-6">
+                Small team, big work.
               </h1>
             </StaggerItem>
             <StaggerItem>
-              <p className="text-base md:text-lg text-neutral-500 leading-relaxed font-light max-w-xl">
-                A talented group of creative professionals dedicated to delivering exceptional results.
+              <p className="text-base md:text-lg text-[#a6a6a6] leading-relaxed max-w-xl">
+                Two creatives obsessed with building things that matter. Design and engineering, unified.
               </p>
             </StaggerItem>
           </StaggerContainer>
         </div>
       </section>
 
-      <section className="border-t border-neutral-900">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+      {/* Team Members */}
+      <section className="border-t border-white/[0.08]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-20 md:py-28">
+          <ScrollReveal>
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-[#a6a6a6] block mb-12">
+              Team
+            </span>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
             {teamMembers.map((member, i) => (
-              <ScrollReveal key={member.name} delay={i * 0.06}>
-                <div className="group">
-                  <div className="relative w-full aspect-[3/4] overflow-hidden bg-neutral-950 mb-4">
+              <ScrollReveal key={member.name} delay={i * 0.08}>
+                <div className="group border border-white/[0.08] overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-neutral-950">
                     <Image
                       src={member.image}
                       alt={member.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="text-lg font-medium tracking-tight text-white">
-                    {member.name}
-                  </h3>
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-neutral-600 mt-1">
-                    {member.role}
-                  </p>
-                  <p className="text-sm text-neutral-500 leading-relaxed font-light mt-3">
-                    {member.bio}
-                  </p>
+                  <div className="p-5">
+                    <h3 className="text-base font-medium text-white tracking-tight">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs text-[#a6a6a6] font-light mt-1 uppercase tracking-[0.1em]">
+                      {member.role}
+                    </p>
+                    <p className="text-sm text-[#a6a6a6] leading-relaxed mt-3">
+                      {member.bio}
+                    </p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
@@ -119,20 +107,21 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <section className="border-t border-neutral-900">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+      {/* Values */}
+      <section className="border-t border-white/[0.08]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-20 md:py-28">
           <ScrollReveal>
-            <span className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-600 block mb-12">
-              Culture
+            <span className="text-xs font-medium uppercase tracking-[0.25em] text-[#a6a6a6] block mb-12">
+              What Drives Us
             </span>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-16 gap-y-12">
-            {culture.map((item, i) => (
+            {values.map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 0.08}>
                 <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white mb-3">
                   {item.title}
                 </h3>
-                <p className="text-sm text-neutral-500 leading-relaxed font-light">
+                <p className="text-sm text-[#a6a6a6] leading-relaxed">
                   {item.description}
                 </p>
               </ScrollReveal>
@@ -141,12 +130,13 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <section className="border-t border-b border-neutral-900 py-10 md:py-12 px-6 md:px-12 text-center">
+      {/* CTA */}
+      <section className="border-t border-b border-white/[0.08] py-10 md:py-12 px-6 md:px-12 text-center">
         <Link
           href="/contact"
-          className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
+          className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-[#a6a6a6] transition-colors duration-300 group"
         >
-          Join Our Team
+          Work With Us
           <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
         </Link>
       </section>
