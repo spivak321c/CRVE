@@ -6,12 +6,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ]
 
 export function Navigation() {

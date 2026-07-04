@@ -11,13 +11,13 @@ const teamMembers = [
     name: "Kuch",
     role: "Product Designer",
     bio: "Crafting interfaces that feel intuitive and look exceptional. Focused on user-centered design systems and visual storytelling.",
-    image: "/kuch.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198709/kuch_eiesrl.jpg",
   },
   {
     name: "Andre",
     role: "Fullstack Developer",
-    bio: "Building fast, scalable applications from database to UI. Passionate about clean architecture and performance.",
-    image: "/andre.jpeg",
+    bio: "Building robust, scalable applications from front to back. Specializes in modern web technologies and cloud infrastructure.",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198701/andre_zgqi1y.jpg",
   },
 ]
 

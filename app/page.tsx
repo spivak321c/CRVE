@@ -68,27 +68,32 @@ const projects = [
     category: "Brand Identity",
     year: "2024",
     images: [
-      "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_3.png",
-      "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_1-Recovered.png",
-      "/websites/Fruity%20Signature/Sign_Mockup.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198735/30fdf6222405637.67e52ac4759e9_txxyii.png",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198752/Artboard_11.jpg_o0zaoy.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198690/2ccb96170262679.645aed7c1e02c.jpg_stwlvg.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198797/b07a93222405637.67e52ac478c12_xs9vtn.png",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198717/floe33_eweolq.png",
     ],
   },
   {
     id: "002",
-    title: "Alive Concert",
+    title: "Alive",
     category: "Campaign",
     year: "2024",
-    images: ["/websites/Alive/ALIVE.png"],
+    images: [
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783201792/alive_lmup2w.png",
+    ],
   },
   {
     id: "003",
-    title: "Sabur Energy Foundation",
+    title: "Sabur Energy",
     category: "Brand Identity",
     year: "2024",
     images: [
-      "/websites/Sabur%20Energy/Free_Large_Banner_Mockup_2.png",
-      "/websites/Sabur%20Energy/Billboard_Mockup_2.jpg",
-      "/websites/Sabur%20Energy/02%20Free%20Closeup%20iPhone%2015%20Pro%20Max%20Mockup.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200650/Free_Sign_Mockup_1_uu9ssf.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200688/Billboard_Mockup_2_oc5mk0.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200638/Black_Frame_Citylight_Mockup_vdqogo.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200636/02_Free_Closeup_iPhone_15_Pro_Max_Mockup_nvorpc.jpg",
     ],
   },
   {
@@ -97,9 +102,9 @@ const projects = [
     category: "Brand Identity",
     year: "2024",
     images: [
-      "/websites/Flow/Artboard%201.jpg",
-      "/websites/Flow/Artboard%202.jpg",
-      "/websites/Flow/Artboard%203.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200372/Artboard_1_jiovwj.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200369/Artboard_2_n5eo4c.jpg",
+      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200368/Artboard_3_cnmwtf.jpg",
     ],
   },
 ]
@@ -152,7 +157,7 @@ export default function Home() {
         <Navigation />
 
         {/* HERO */}
-        <section className="relative h-screen overflow-hidden">
+        <section className="relative h-screen overflow-hidden bg-black">
           <div className="absolute top-0 left-0 w-full h-full">
             <video
               autoPlay
@@ -161,7 +166,7 @@ export default function Home() {
               playsInline
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src="/video1.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/mwvch9hy/video/upload/v1783198938/video1_pv1eob.mp4" type="video/mp4" />
             </video>
             <div className="absolute inset-0 bg-black/60" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,#000_100%)]" />
@@ -169,30 +174,35 @@ export default function Home() {
 
           <div className="absolute top-0 left-0 w-full h-full flex items-center pt-28 pb-12 px-6 md:px-12 z-10">
             <div className="max-w-[1400px] mx-auto w-full">
-              <StaggerContainer>
-                <StaggerItem>
-                  <span className="text-sm font-bold uppercase tracking-[0.25em] text-neutral-500 mb-12 block">
-                    Port Harcourt Rivers &mdash; Est. 2024
-                  </span>
-                </StaggerItem>
-
-                <StaggerItem>
-                  <h1 className="text-[clamp(36px,8vw,88px)] font-extrabold leading-[1.05] tracking-[-0.04em] text-white max-w-full break-words">
-                    {["Digital products.", "Brand systems.", "Creative motion."].map((line) => (
-                      <span key={line} className="block hero-line overflow-hidden" data-text={line}>
-                        {line.split(" ").map((word, i, arr) => (
-                          <span
-                            key={i}
-                            className="inline-block"
-                            style={{ opacity: 0.9 - i * 0.05 }}
-                          >
-                            {word}{i < arr.length - 1 ? " " : ""}
-                          </span>
-                        ))}
+              <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  className="space-y-1 sm:space-y-2"
+                >
+                  <h1 className="text-[clamp(36px,8vw,88px)] font-extrabold leading-[1.08] tracking-[-0.04em] max-w-full break-words">
+                    {["Digital products.", "Brand systems.", "Creative motion."].map((line, lineIdx) => (
+                      <span key={line} className="block hero-line">
+                        <span className="block leading-[1.12]">
+                          {line.split(" ").map((word, wordIdx) => (
+                            <motion.span
+                              key={`${lineIdx}-${wordIdx}`}
+                              className="inline-block mr-[0.25em]"
+                              initial={{ y: "100%", opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              transition={{
+                                delay: 0.3 + lineIdx * 0.25 + wordIdx * 0.12,
+                                duration: 0.8,
+                                ease: [0.16, 1, 0.3, 1],
+                              }}
+                            >
+                              {word}
+                            </motion.span>
+                          ))}
+                        </span>
                       </span>
                     ))}
                   </h1>
-                </StaggerItem>
+                </motion.div>
 
                 <StaggerItem>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
@@ -213,7 +223,6 @@ export default function Home() {
                     </div>
                   </div>
                 </StaggerItem>
-              </StaggerContainer>
             </div>
           </div>
         </section>
@@ -241,14 +250,18 @@ export default function Home() {
               style={{ zIndex: i + 1 }}
             >
               <div className="relative w-full h-[110%] -translate-y-[5%]">
-                <Image
-                  src={project.images[0]}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                  priority={i === 0}
-                />
+                {project.images[0] ? (
+                  <Image
+                    src={project.images[0]}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority={i === 0}
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-neutral-950" />
+                )}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent via-50% to-black/40" />
               <div className="absolute bottom-12 right-8 md:right-12 text-right">

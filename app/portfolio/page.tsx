@@ -11,65 +11,65 @@ const featuredProject = {
   title: "Fruity Signature",
   category: "Branding & Design",
   description: "Premium brand identity and packaging design for a natural juice company.",
-  image: "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_3.png",
-  hoverImage: "/websites/Fruity%20Signature/Sign_Mockup.jpg",
+  image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198735/30fdf6222405637.67e52ac4759e9_txxyii.png",
+  hoverImage: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198717/floe33_eweolq.png",
   year: "2024",
 }
 
 const projects = [
   {
     id: 1,
-    title: "Onchain Core",
+    title: "Alive",
     category: "Design",
-    image: "/websites/Alive/ALIVE.png",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783201792/alive_lmup2w.png",
     hoverImage: null,
     year: "2024",
   },
   {
     id: 2,
-    title: "Things Fall Apart",
+    title: "Sabur Energy",
     category: "Strategy",
-    image: "/websites/Sabur%20Energy/Free_Large_Banner_Mockup_2.png",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200650/Free_Sign_Mockup_1_uu9ssf.jpg",
     hoverImage: null,
     year: "2023",
   },
   {
     id: 3,
-    title: "Brand Guidelines",
+    title: "Sabur Energy",
     category: "Branding",
-    image: "/websites/Sabur%20Energy/Billboard_Mockup_2.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200688/Billboard_Mockup_2_oc5mk0.jpg",
     hoverImage: null,
     year: "2024",
   },
   {
     id: 4,
-    title: "E-Commerce Platform",
+    title: "Sabur Energy",
     category: "Design",
-    image: "/websites/Sabur%20Energy/02%20Free%20Closeup%20iPhone%2015%20Pro%20Max%20Mockup.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200636/02_Free_Closeup_iPhone_15_Pro_Max_Mockup_nvorpc.jpg",
     hoverImage: null,
     year: "2023",
   },
   {
     id: 5,
-    title: "Social Media Campaign",
+    title: "Flow",
     category: "Strategy",
-    image: "/websites/Flow/Artboard%201.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200372/Artboard_1_jiovwj.jpg",
     hoverImage: null,
     year: "2024",
   },
   {
     id: 6,
-    title: "Mobile App Design",
+    title: "Flow",
     category: "Design",
-    image: "/websites/Flow/Artboard%202.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200369/Artboard_2_n5eo4c.jpg",
     hoverImage: null,
     year: "2024",
   },
   {
     id: 7,
-    title: "Corporate Rebrand",
+    title: "Flow",
     category: "Branding",
-    image: "/websites/Flow/Artboard%203.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200368/Artboard_3_cnmwtf.jpg",
     hoverImage: null,
     year: "2023",
   },
@@ -77,7 +77,7 @@ const projects = [
     id: 8,
     title: "SaaS Platform",
     category: "Development",
-    image: "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_1-Recovered.png",
+    image: null,
     hoverImage: null,
     year: "2024",
   },
@@ -85,7 +85,7 @@ const projects = [
     id: 9,
     title: "E-Learning Portal",
     category: "Development",
-    image: "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_2.png",
+    image: null,
     hoverImage: null,
     year: "2024",
   },
@@ -93,7 +93,7 @@ const projects = [
     id: 10,
     title: "Fitness Tracking App",
     category: "Development",
-    image: "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_3.png",
+    image: null,
     hoverImage: null,
     year: "2024",
   },
@@ -101,7 +101,7 @@ const projects = [
     id: 11,
     title: "Social Commerce App",
     category: "Development",
-    image: "/websites/Fruity%20Signature/Orange_Juice_Bottle_Mockup_4.png",
+    image: null,
     hoverImage: null,
     year: "2023",
   },
@@ -146,15 +146,17 @@ export default function PortfolioPage() {
       <section className="border-t border-white/[0.08]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 md:py-16">
           <ScrollReveal>
-            <Link href={`/portfolio/${featuredProject.title.toLowerCase().replace(/\s+/g, "-")}`} className="group block">
+              <div className="group">
               <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-neutral-950">
-                <Image
-                  src={featuredProject.image}
-                  alt={featuredProject.title}
-                  fill
-                  sizes="100vw"
-                  className="object-cover img-primary"
-                />
+                {featuredProject.image ? (
+                  <Image
+                    src={featuredProject.image}
+                    alt={featuredProject.title}
+                    fill
+                    sizes="100vw"
+                    className="object-cover img-primary"
+                  />
+                ) : null}
                 {featuredProject.hoverImage ? (
                   <Image
                     src={featuredProject.hoverImage}
@@ -182,63 +184,65 @@ export default function PortfolioPage() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
       <section className="border-t border-white/[0.08]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="flex gap-8 py-6 border-b border-white/[0.08] overflow-x-auto">
+          <div className="flex gap-5 md:gap-8 py-5 md:py-6 border-b border-white/[0.08] overflow-x-auto no-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelected(cat)}
-                className={`text-xs font-medium uppercase tracking-[0.2em] whitespace-nowrap transition-colors duration-300 relative ${
+                className={`shrink-0 text-[11px] md:text-xs font-medium uppercase tracking-[0.2em] whitespace-nowrap transition-colors duration-300 relative pb-5 md:pb-6 ${
                   selected === cat ? "text-white" : "text-white/[0.35] hover:text-white/[0.6]"
                 }`}
               >
                 {cat}
                 {selected === cat && (
-                  <span className="absolute -bottom-[25px] left-0 right-0 h-px bg-white" />
+                  <span className="absolute bottom-0 left-0 right-0 h-px bg-white" />
                 )}
               </button>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 py-12 md:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 py-10 md:py-16">
             {filtered.map((project, i) => (
               <ScrollReveal key={project.id} delay={i * 0.04} y={20}>
                 <div className="group cursor-pointer">
                   <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover img-primary"
-                    />
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                    ) : null}
                     {project.hoverImage ? (
                       <Image
                         src={project.hoverImage}
                         alt=""
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover img-secondary"
+                        className="object-cover"
                       />
                     ) : (
-                      <div className="img-secondary bg-black/90 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/90 flex items-center justify-center">
                         <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/[0.35]">
                           View Project
                         </span>
                       </div>
                     )}
                   </div>
-                  <div className="flex justify-between items-center py-4 border-b border-white/[0.08]">
-                    <h3 className="text-base font-medium tracking-tight text-white/[0.55] group-hover:text-white transition-colors duration-300">
+                  <div className="flex justify-between items-center py-3 md:py-4 border-b border-white/[0.08]">
+                    <h3 className="text-sm md:text-base font-medium tracking-tight text-white/[0.55] group-hover:text-white transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <span className="text-xs text-white/[0.35] font-mono">{project.year}</span>
+                    <span className="text-[11px] md:text-xs text-white/[0.35] font-mono">{project.year}</span>
                   </div>
                 </div>
               </ScrollReveal>

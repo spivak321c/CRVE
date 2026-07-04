@@ -58,12 +58,12 @@ const team = [
   {
     name: "Kuch",
     role: "Product Designer",
-    image: "/kuch.jpg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198709/kuch_eiesrl.jpg",
   },
   {
     name: "Andre",
     role: "Fullstack Developer",
-    image: "/andre.jpeg",
+    image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198701/andre_zgqi1y.jpg",
   },
 ]
 
