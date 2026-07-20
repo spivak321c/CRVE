@@ -46,21 +46,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Values Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-12 border-t border-white/[0.08]">
-          <div className="text-left md:text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Strategy</p>
-          </div>
-          <div className="text-left md:text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Execution</p>
-          </div>
-          <div className="text-left md:text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Planning</p>
-          </div>
-        </div>
-
         {/* Footer Bottom */}
-        <div className="border-t border-white/[0.08] pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-[#a6a6a6]">
+        <div className="pt-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-[#a6a6a6]">
           <p>&copy; 2026 CRVE. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="nav-link hover:text-white transition-colors">Privacy</a>

@@ -8,6 +8,7 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ScrollBackground } from "@/components/scroll-background"
 import { ScrollReveal, WordReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import { ValuesSection } from "@/components/values-section"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
@@ -360,6 +361,9 @@ export default function Home() {
                 </div>
               </div>
             </section>
+
+            {/* VALUES SECTION */}
+            <ValuesSection />
 
             {/* MANIFESTO */}
             <section className="border-t border-white/[0.08]">
