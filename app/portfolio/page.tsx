@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
 import Link from "next/link"
 import Image from "next/image"
+import { staggerFadeScale, parallaxScroll } from "@/lib/gsap-effects"
 
 const featuredProject = {
   title: "Fruity Signature",
@@ -114,6 +116,19 @@ export default function PortfolioPage() {
 
   const filtered = selected === "All" ? projects : projects.filter((p) => p.category === selected)
 
+  useEffect(() => {
+    // Stagger animation for portfolio grid
+    staggerFadeScale(".portfolio-card", {
+      duration: 0.6,
+      stagger: 0.08,
+      delay: 0.1,
+      fromScale: 0.9,
+    })
+
+    // Parallax effect on featured project
+    parallaxScroll(".featured-project-img", 0.3)
+  }, [selected])
+
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
@@ -147,7 +162,7 @@ export default function PortfolioPage() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 md:py-16">
           <ScrollReveal>
               <div className="group">
-              <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-neutral-950">
+              <div className="featured-project-img relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-neutral-950">
                 {featuredProject.image ? (
                   <Image
                     src={featuredProject.image}
@@ -211,7 +226,7 @@ export default function PortfolioPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 py-10 md:py-16">
             {filtered.map((project, i) => (
               <ScrollReveal key={project.id} delay={i * 0.04} y={20}>
-                <div className="group cursor-pointer">
+                <div className="portfolio-card group cursor-pointer">
                   <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-950">
                     {project.image ? (
                       <Image

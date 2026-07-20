@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import { PricingCalculator } from "@/components/pricing-calculator"
 import Link from "next/link"
+import { staggerFadeScale } from "@/lib/gsap-effects"
 
 const plans = [
   {
@@ -60,6 +61,24 @@ const faqs = [
 export default function PricingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
+  useEffect(() => {
+    // Stagger animation for pricing plans
+    staggerFadeScale(".pricing-card", {
+      duration: 0.7,
+      stagger: 0.1,
+      delay: 0.2,
+      fromScale: 0.9,
+    })
+
+    // FAQ items animation
+    staggerFadeScale(".pricing-faq-item", {
+      duration: 0.6,
+      stagger: 0.05,
+      delay: 0.1,
+      fromScale: 0.98,
+    })
+  }, [])
+
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
@@ -100,7 +119,7 @@ export default function PricingPage() {
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`bg-black p-8 md:p-10 flex flex-col transition-all duration-500 ${
+                className={`pricing-card bg-black p-8 md:p-10 flex flex-col transition-all duration-500 ${
                   plan.highlighted
                     ? "border border-white/[0.15] -m-px relative z-10"
                     : "border border-transparent hover:border-white/[0.1] hover:-translate-y-1"
@@ -145,7 +164,7 @@ export default function PricingPage() {
             {faqs.map((item, i) => (
               <div
                 key={i}
-                className="border-b border-white/[0.08] last:border-b-0"
+                className="pricing-faq-item border-b border-white/[0.08] last:border-b-0"
               >
                 <ScrollReveal>
                   <button

@@ -9,11 +9,14 @@ import { Footer } from "@/components/footer"
 import { ScrollBackground } from "@/components/scroll-background"
 import { ScrollReveal, WordReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import { ValuesSection } from "@/components/values-section"
+import { HeroBanner } from "@/components/hero-banner"
+import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { magneticHover, staggerFadeScale } from "@/lib/gsap-effects"
 
 const ease = [0.25, 1, 0.5, 1] as const
 
@@ -151,6 +154,25 @@ export default function Home() {
     }
   }, [])
 
+  // Initialize magnetic hover effects on service cards
+  useEffect(() => {
+    magneticHover(".service-card-hover", 0.4)
+    
+    return () => {
+      // Cleanup handled by magneticHover
+    }
+  }, [])
+
+  // Stagger animation for project cards
+  useEffect(() => {
+    staggerFadeScale(".project-card", {
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 0.2,
+      fromScale: 0.95,
+    })
+  }, [])
+
   return (
     <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
       <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
@@ -247,7 +269,7 @@ export default function Home() {
           {projects.map((project, i) => (
             <div
               key={project.id}
-              className="sticky top-0 h-screen w-full overflow-hidden"
+              className="project-card sticky top-0 h-screen w-full overflow-hidden"
               style={{ zIndex: i + 1 }}
             >
               <div className="relative w-full h-[110%] -translate-y-[5%]">
@@ -315,7 +337,7 @@ export default function Home() {
                   {services.map((service) => (
                     <div
                       key={service.id}
-                      className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-t border-white/[0.08] overflow-hidden"
+                      className="service-card-hover group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-t border-white/[0.08] overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] scale-x-0 group-hover:scale-x-100 origin-left" />
                       <div className="relative z-10 md:col-span-1">

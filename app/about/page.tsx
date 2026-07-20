@@ -7,6 +7,7 @@ import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
+import { staggerFadeScale, magneticHover } from "@/lib/gsap-effects"
 
 const values = [
   {
@@ -111,6 +112,27 @@ function StatCounter({ value, suffix, label, delay }: { value: number; suffix: s
 }
 
 export default function AboutPage() {
+  useEffect(() => {
+    // Stagger animation for values cards
+    staggerFadeScale(".values-card", {
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 0.1,
+      fromScale: 0.9,
+    })
+
+    // Stagger animation for team members
+    staggerFadeScale(".team-member", {
+      duration: 0.6,
+      stagger: 0.08,
+      delay: 0.1,
+      fromScale: 0.95,
+    })
+
+    // Magnetic hover effect on team members
+    magneticHover(".team-member", 0.2)
+  }, [])
+
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
       <Navigation />
@@ -238,7 +260,7 @@ export default function AboutPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
                     transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="w-[320px] flex-shrink-0 border border-white/[0.08] p-8 hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between"
+                    className="values-card w-[320px] flex-shrink-0 border border-white/[0.08] p-8 hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between"
                   >
                     <span className="text-5xl font-extrabold tracking-tight text-white/[0.06] block mb-6">
                       {value.number}
@@ -260,7 +282,7 @@ export default function AboutPage() {
           <div className="md:hidden space-y-4">
             {values.map((value, i) => (
               <ScrollReveal key={value.number} delay={i * 0.08}>
-                <div className="border border-white/[0.08] p-6">
+                <div className="values-card border border-white/[0.08] p-6">
                   <div className="flex items-center gap-4 mb-3">
                     <span className="text-sm font-extrabold tracking-tight text-[#a6a6a6]">
                       {value.number}
@@ -332,7 +354,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
             {team.map((member, i) => (
               <ScrollReveal key={member.name} delay={i * 0.08}>
-                <div className="group border border-white/[0.08] overflow-hidden">
+                <div className="team-member group border border-white/[0.08] overflow-hidden">
                   <div className="relative aspect-[3/4] overflow-hidden bg-neutral-950">
                     <Image
                       src={member.image}
