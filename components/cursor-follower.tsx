@@ -1,14 +1,19 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 
 export function CursorFollower() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const mousePos = useRef({ x: 0, y: 0 })
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    if (!cursorRef.current) return
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted || !cursorRef.current) return
 
     const cursor = cursorRef.current
     let isMoving = false
@@ -49,15 +54,17 @@ export function CursorFollower() {
       document.removeEventListener("mouseenter", onMouseEnter)
       document.removeEventListener("mouseleave", onMouseLeave)
     }
-  }, [])
+  }, [mounted])
+
+  if (!mounted) return null
 
   return (
     <div
       ref={cursorRef}
-      className="fixed w-8 h-8 border-2 border-[#ff006e] rounded-full pointer-events-none z-50 opacity-0"
+      className="fixed w-8 h-8 border-2 border-neon-cyan rounded-full pointer-events-none z-50 opacity-0"
       style={{
         transform: "translate3d(0, 0, 0)",
-        boxShadow: "0 0 20px rgba(255, 0, 110, 0.5), inset 0 0 20px rgba(255, 0, 110, 0.3)",
+        boxShadow: "0 0 20px rgba(0, 255, 255, 0.5)",
       }}
     />
   )
