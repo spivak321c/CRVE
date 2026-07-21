@@ -1,256 +1,213 @@
 "use client"
 
-import { useEffect } from "react"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
-import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
-import Link from "next/link"
-import Image from "next/image"
-import { magneticHover, staggerFadeScale } from "@/lib/gsap-effects"
+import { useState } from "react"
+import { LuxuryHeader } from "@/components/luxury-header"
+import { ContactDrawer } from "@/components/contact-drawer"
+import { CursorFollower } from "@/components/cursor-follower"
+import { ServicesAccordion } from "@/components/services-accordion"
+import { motion } from "framer-motion"
 
-const serviceGroups = [
+const services = [
   {
-    label: "Brand",
-    items: [
-      {
-        id: "01",
-        title: "Brand Strategy",
-        description: "We develop comprehensive brand strategies that define your unique position. From market research to positioning, we build a foundation for all creative work.",
-        features: ["Market Research", "Brand Positioning", "Competitive Analysis", "Messaging Framework"],
-      },
-      {
-        id: "02",
-        title: "Visual Identity",
-        description: "Creating distinctive visual identities that make your brand memorable. Logos, color systems, typography, and all visual elements.",
-        features: ["Logo Design", "Color Systems", "Typography", "Brand Asset Library"],
-      },
+    id: "1",
+    title: "Brand Strategy & Positioning",
+    description: "Define your unique market position",
+    details: [
+      "Comprehensive market & competitive analysis",
+      "Brand vision & positioning framework",
+      "Messaging architecture & guidelines",
+      "Audience research & segmentation",
+      "Brand personality definition",
+      "Stakeholder alignment workshops",
     ],
   },
   {
-    label: "Digital",
-    items: [
-      {
-        id: "03",
-        title: "Digital Design",
-        description: "Beautiful and functional digital experiences. From websites to applications, interfaces that engage users and drive results.",
-        features: ["UX/UI Design", "Website Design", "App Design", "Design Systems"],
-      },
-      {
-        id: "06",
-        title: "Content Strategy",
-        description: "Strategic content that tells your story and engages your audience. Content strategies aligned with business goals.",
-        features: ["Content Audit", "Strategy Development", "Copywriting", "SEO Optimization"],
-      },
+    id: "2",
+    title: "Visual Identity Design",
+    description: "Create memorable brand experiences",
+    details: [
+      "Logo & mark design (multiple concepts)",
+      "Color system & palette development",
+      "Typography selection & specifications",
+      "Design system & brand standards",
+      "Iconography & illustration style",
+      "Brand asset library delivery",
     ],
   },
   {
-    label: "Development",
-    items: [
-      {
-        id: "04",
-        title: "Web Development",
-        description: "Fast, scalable, and secure web applications using modern technologies. Responsive websites to complex platforms.",
-        features: ["Full-Stack Development", "Performance Optimization", "API Development", "Database Architecture"],
-      },
-      {
-        id: "05",
-        title: "App Development",
-        description: "Native and cross-platform mobile applications that users love. From concept to launch, the entire development lifecycle.",
-        features: ["iOS Development", "Android Development", "Cross-Platform", "App Store Optimization"],
-      },
+    id: "3",
+    title: "Digital Design & UX",
+    description: "Beautiful, functional interfaces",
+    details: [
+      "User research & persona development",
+      "Wireframing & user journey mapping",
+      "Interactive prototyping",
+      "Responsive design systems",
+      "Accessibility compliance (WCAG)",
+      "Design handoff & documentation",
+    ],
+  },
+  {
+    id: "4",
+    title: "Web Development",
+    description: "Scalable, performant digital products",
+    details: [
+      "Full-stack development expertise",
+      "Next.js & modern frameworks",
+      "Progressive web applications (PWA)",
+      "Performance optimization & SEO",
+      "API development & integration",
+      "Deployment & maintenance support",
+    ],
+  },
+  {
+    id: "5",
+    title: "E-Commerce Solutions",
+    description: "Drive revenue through digital commerce",
+    details: [
+      "Shopify & custom platform setup",
+      "Product catalog optimization",
+      "Payment gateway integration",
+      "Inventory management systems",
+      "Analytics & conversion optimization",
+      "Marketing automation setup",
+    ],
+  },
+  {
+    id: "6",
+    title: "Brand Campaign Design",
+    description: "Integrated marketing experiences",
+    details: [
+      "Campaign concept & creative direction",
+      "Multi-channel asset creation",
+      "Social media content strategy",
+      "Video & motion graphics",
+      "Email & print collateral",
+      "Campaign performance tracking",
     ],
   },
 ]
-
-const process = [
-  {
-    step: "01",
-    title: "Discovery",
-    description: "Understand your business, goals, and audience through research and workshops.",
-  },
-  {
-    step: "02",
-    title: "Strategy",
-    description: "Develop a strategic approach tailored to your unique needs and market position.",
-  },
-  {
-    step: "03",
-    title: "Creation",
-    description: "Bring the strategy to life through design and content development.",
-  },
-  {
-    step: "04",
-    title: "Delivery",
-    description: "Deliver polished assets and provide support for successful implementation.",
-  },
-]
-
-// Service card images mapped by ID
-const serviceImages: Record<string, string> = {
-  "01": "/images/service-strategy.png",
-  "02": "/images/service-design.png",
-  "03": "/images/service-design.png",
-  "04": "/images/service-development.png",
-  "05": "/images/service-development.png",
-  "06": "/images/service-strategy.png",
-}
 
 export default function ServicesPage() {
-  useEffect(() => {
-    // Initialize magnetic hover effects
-    magneticHover(".service-card-item", 0.3)
-
-    // Stagger animation for service items
-    staggerFadeScale(".service-card-item", {
-      duration: 0.6,
-      stagger: 0.05,
-      delay: 0.1,
-      fromScale: 0.95,
-    })
-  }, [])
+  const [isContactOpen, setIsContactOpen] = useState(false)
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
-      <Navigation />
+    <>
+      <CursorFollower />
+      <LuxuryHeader />
+      <ContactDrawer isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
-      <section className="relative pt-32 pb-16 px-6 md:px-12 overflow-hidden">
-        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(150px,25vw,400px)] font-extrabold text-white/[0.015] tracking-[-0.05em] select-none pointer-events-none whitespace-nowrap">
-          Services
-        </span>
-        <div className="max-w-[1400px] mx-auto relative z-10">
-          <StaggerContainer>
-            <StaggerItem>
-              <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/[0.35] block mb-6">
-                Services
-              </span>
-            </StaggerItem>
-            <StaggerItem>
-              <h1 className="text-[clamp(32px,8vw,88px)] font-extrabold leading-[1.0] tracking-[-0.03em] text-white max-w-full mb-8">
-                Services designed to elevate your brand.
-              </h1>
-            </StaggerItem>
-            <StaggerItem>
-              <p className="text-base md:text-lg text-white/[0.45] leading-relaxed max-w-xl">
-                A comprehensive range of services to help your brand succeed. From strategy to execution.
-              </p>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-      </section>
+      <main className="bg-black min-h-screen pt-32 pb-20">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Page Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-24"
+          >
+            <h1 className="text-7xl md:text-8xl font-black tracking-tighter mb-8">
+              Our Services<span className="text-neon-cyan">.</span>
+            </h1>
+            <p className="text-xl text-neutral-400 max-w-3xl">
+              Complete design and development solutions tailored to your unique needs. From strategy to execution, we
+              handle every aspect of your digital transformation.
+            </p>
+          </motion.div>
 
-      <section className="border-t border-white/[0.08]">
-        <div className="max-w-[1400px] mx-auto">
-          {serviceGroups.map((group) => (
-            <div key={group.label}>
-              <div className="px-6 md:px-12 pt-16 pb-6">
-                <ScrollReveal>
-                  <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/[0.25]">
-                    {group.label}
-                  </span>
-                </ScrollReveal>
-              </div>
-              <div className="space-y-0">
-                {group.items.map((service) => (
-                  <div
-                    key={service.id}
-                    className="service-card-item group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-b border-white/[0.08] last:border-b-0 overflow-hidden"
-                  >
-                    {/* Animated background image */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500">
-                      <Image
-                        src={serviceImages[service.id] || "/images/service-design.png"}
-                        alt={service.title}
-                        fill
-                        className="object-cover scale-110"
-                        sizes="100vw"
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-white transition-transform duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] scale-x-0 group-hover:scale-x-100 origin-left" />
-                    <div className="relative z-10 md:col-span-1 transition-colors duration-300 group-hover:text-black">
-                      <ScrollReveal>
-                        <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-white/[0.15] group-hover:text-black transition-colors duration-300">
-                          {service.id}
-                        </span>
-                      </ScrollReveal>
-                    </div>
-                    <div className="relative z-10 md:col-span-4 transition-colors duration-300">
-                      <ScrollReveal delay={0.05}>
-                        <h2 className="text-xl md:text-2xl font-medium tracking-tight text-white group-hover:text-black mb-3 transition-colors duration-300">
-                          {service.title}
-                        </h2>
-                        <p className="text-sm text-white/[0.45] group-hover:text-black/60 leading-relaxed transition-colors duration-300">
-                          {service.description}
-                        </p>
-                      </ScrollReveal>
-                    </div>
-                    <div className="relative z-10 md:col-span-5 transition-colors duration-300">
-                      <ScrollReveal delay={0.1}>
-                        <ul className="space-y-2">
-                          {service.features.map((feature, i) => (
-                            <li key={i} className="text-xs text-white/[0.25] group-hover:text-black/50 font-mono transition-colors duration-300">
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </ScrollReveal>
-                    </div>
-                    <div className="relative z-10 md:col-span-2 flex md:justify-end">
-                      <ScrollReveal delay={0.15}>
-                        <Link
-                          href="/contact"
-                          className="nav-link text-xs font-medium uppercase tracking-[0.2em] text-white/[0.35] group-hover:text-black transition-colors duration-300"
-                        >
-                          Inquire
-                        </Link>
-                      </ScrollReveal>
-                    </div>
+          {/* Services Accordion */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <ServicesAccordion items={services} />
+          </motion.div>
+
+          {/* Process Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mt-32 py-20"
+          >
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-12">
+              Our <span className="text-neon-cyan">Process</span>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                {
+                  step: "01",
+                  title: "Discovery",
+                  desc: "Understand your goals, challenges, and target audience",
+                },
+                {
+                  step: "02",
+                  title: "Strategy",
+                  desc: "Develop comprehensive plan and creative direction",
+                },
+                {
+                  step: "03",
+                  title: "Design",
+                  desc: "Create beautiful, functional digital experiences",
+                },
+                {
+                  step: "04",
+                  title: "Launch",
+                  desc: "Deploy and optimize for maximum impact",
+                },
+              ].map((phase, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative"
+                >
+                  <div className="mb-4">
+                    <p className="text-6xl font-black text-neon-cyan/20">{phase.step}</p>
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-2xl font-bold mb-2">{phase.title}</h3>
+                  <p className="text-neutral-400">{phase.desc}</p>
+
+                  {i < 3 && (
+                    <div className="hidden md:block absolute -right-4 top-6 text-neon-cyan text-2xl">→</div>
+                  )}
+                </motion.div>
+              ))}
             </div>
-          ))}
+          </motion.div>
+
+          {/* CTA Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mt-32 py-20 px-8 bg-gradient-to-r from-neon-cyan/10 to-neon-pink/10 border border-white/10 text-center"
+          >
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-6">
+              Interested in Working
+              <br />
+              <span className="text-neon-cyan">Together?</span>
+            </h2>
+            <p className="text-neutral-400 mb-8 max-w-2xl mx-auto">
+              Let's discuss how our services can help bring your vision to life.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsContactOpen(true)}
+              className="px-8 py-4 bg-neon-cyan text-black font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all duration-300"
+            >
+              Get in Touch
+            </motion.button>
+          </motion.div>
         </div>
-      </section>
-
-      <section className="border-t border-white/[0.08]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
-          <ScrollReveal>
-            <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/[0.35] block mb-12">
-              Process
-            </span>
-          </ScrollReveal>
-          <div className="flex flex-col md:flex-row md:divide-x divide-y md:divide-y-0 divide-white/[0.08]">
-            {process.map((item) => (
-              <ScrollReveal key={item.step} delay={0}>
-                <div className="flex-1 pt-8 md:pt-0 md:px-8 first:md:pl-0 last:md:pr-0">
-                  <span className="text-7xl font-extrabold tracking-tight text-white/[0.08] block mb-4">
-                    {item.step}
-                  </span>
-                  <h3 className="text-lg font-medium tracking-tight text-white mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-white/[0.45] leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-b border-white/[0.08] py-10 md:py-12 px-6 md:px-12 text-center">
-        <Link
-          href="/contact"
-          className="inline-flex items-center gap-5 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-white/[0.45] transition-colors group"
-        >
-          Start a Project
-          <span className="inline-block w-16 h-px bg-white group-hover:w-24 transition-all duration-500" />
-        </Link>
-      </section>
-
-      <Footer />
-    </main>
+      </main>
+    </>
   )
 }
