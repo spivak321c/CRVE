@@ -85,52 +85,46 @@ export default function HomePage() {
       <main className="bg-black">
         {/* Hero Section */}
         <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden pt-20">
-          {/* Gradient Background */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-20 left-1/4 w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-neon-pink/5 rounded-full blur-3xl" />
-          </div>
-
           <div className="relative z-10 text-center max-w-6xl mx-auto">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
-              <p className="text-neon-cyan font-bold text-sm uppercase tracking-widest mb-6">
-                Creative Excellence
+              <p className="text-xs font-mono uppercase tracking-[0.3em] mb-8 text-neutral-400">
+                DESIGN STUDIO
               </p>
             </motion.div>
 
             <h1
               ref={titleRef}
-              className="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-8"
+              className="text-8xl md:text-9xl lg:text-[10rem] font-black tracking-tighter leading-none mb-8 text-white"
             >
-              We Design
+              We Create
               <br />
-              <span className="text-neon-cyan">The Future</span>
+              <span className="text-[#ff006e]">Tomorrow</span>
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12"
+              className="text-sm md:text-base font-mono text-neutral-500 max-w-2xl mx-auto mb-16 leading-relaxed"
             >
-              Bold ideas. Exceptional execution. We create digital experiences that push boundaries and inspire change.
+              Pixel-perfect design meets intelligent strategy. We build digital experiences that captivate and convert.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             >
               <button
                 onClick={() => setIsContactOpen(true)}
-                className="px-8 py-4 bg-neon-cyan text-black font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all duration-300"
+                className="px-10 py-5 bg-white text-black font-black text-xs uppercase tracking-wider hover:shadow-[0_0_40px_rgba(255,0,110,0.3)] transition-all duration-300 border border-white hover:border-[#ff006e]"
               >
                 Start Project
               </button>
               <Link
                 href="/work"
-                className="px-8 py-4 border-2 border-neon-cyan text-neon-cyan font-bold text-sm uppercase tracking-wider hover:bg-neon-cyan/10 transition-all duration-300"
+                className="px-10 py-5 border-2 border-white text-white font-black text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300"
               >
                 View Work
               </Link>
@@ -141,7 +135,7 @@ export default function HomePage() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-neon-cyan"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -157,16 +151,16 @@ export default function HomePage() {
         </section>
 
         {/* Services Section */}
-        <section className="py-32 px-6 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 mb-20">
-            <div>
-              <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-6">
-                What We
+        <section className="py-32 px-6 max-w-7xl mx-auto border-y border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-20 mb-20">
+            <div className="md:col-span-2">
+              <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-6 text-white">
+                Our
                 <br />
-                <span className="text-neon-cyan">Deliver</span>
+                <span className="text-[#ff006e]">Services</span>
               </h2>
-              <p className="text-neutral-400 text-lg leading-relaxed">
-                We combine strategic thinking with exceptional design and development to create digital products that matter.
+              <p className="text-sm font-mono text-neutral-500 leading-relaxed max-w-xl">
+                Strategic brand development, visual identity design, digital experiences, and development that elevates your business.
               </p>
             </div>
           </div>
@@ -179,73 +173,69 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: i * 0.1 }}
-                className="group p-8 border border-white/10 hover:border-neon-cyan/50 transition-all duration-300 hover:bg-white/2"
+                className="group p-8 border border-white/10 hover:border-[#ff006e] transition-all duration-300 hover:bg-white/2 hover:shadow-[inset_0_0_20px_rgba(255,0,110,0.1)]"
               >
-                <div className="text-4xl mb-4 text-neon-cyan group-hover:scale-125 transition-transform duration-300">
+                <div className="text-4xl mb-4 text-white group-hover:text-[#ff006e] group-hover:scale-110 transition-all duration-300">
                   {service.icon}
                 </div>
-                <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                <p className="text-neutral-400">{service.description}</p>
+                <h3 className="text-xl font-black mb-3 text-white">{service.title}</h3>
+                <p className="text-sm text-neutral-500 font-mono">{service.description}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 px-6 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-neon-cyan/5 rounded-full blur-3xl" />
-          </div>
-
+        <section className="py-32 px-6 relative overflow-hidden border-y border-white/10">
           <div className="relative z-10 max-w-4xl mx-auto text-center">
-            <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-8">
-              Ready to Create
+            <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-8 text-white">
+              Let's Build
               <br />
-              <span className="text-neon-cyan">Something Exceptional?</span>
+              <span className="text-[#ff006e]">Something Great</span>
             </h2>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsContactOpen(true)}
-              className="px-10 py-5 bg-neon-cyan text-black font-bold text-lg uppercase tracking-wider hover:shadow-[0_0_40px_rgba(0,255,255,0.6)] transition-all duration-300"
+              className="px-10 py-5 bg-white text-black font-black text-xs uppercase tracking-wider hover:bg-[#ff006e] hover:text-white hover:shadow-[0_0_40px_rgba(255,0,110,0.4)] transition-all duration-300 border border-white hover:border-[#ff006e]"
             >
-              Let's Talk
+              Start Your Project
             </motion.button>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-white/10 py-12 px-6">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <footer className="border-t border-white/10 py-12 px-6 bg-black">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
             <div>
-              <p className="text-2xl font-black tracking-tighter mb-2">
-                CRVE<span className="text-neon-cyan">.</span>
+              <p className="text-2xl font-black tracking-tighter mb-4 text-white">
+                CRVE<span className="text-[#ff006e]">.</span>
               </p>
-              <p className="text-sm text-neutral-400">Creative. Bold. Forward-thinking.</p>
+              <p className="text-xs font-mono text-neutral-500">Independent creative studio crafting bold digital experiences.</p>
             </div>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-neutral-600 font-bold">Navigation</p>
-              <div className="space-y-1">
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] font-black text-white">Links</p>
+              <div className="space-y-2">
                 <p>
-                  <Link href="/work" className="text-neutral-400 hover:text-neon-cyan transition-colors text-sm">
+                  <Link href="/work" className="text-xs text-neutral-500 font-mono hover:text-[#ff006e] transition-colors">
                     Work
                   </Link>
                 </p>
                 <p>
-                  <Link href="/services" className="text-neutral-400 hover:text-neon-cyan transition-colors text-sm">
+                  <Link href="/services" className="text-xs text-neutral-500 font-mono hover:text-[#ff006e] transition-colors">
                     Services
                   </Link>
                 </p>
               </div>
             </div>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-widest text-neutral-600 font-bold">Contact</p>
-              <p className="text-neutral-400 text-sm">hello@crve.studio</p>
-              <p className="text-neutral-400 text-sm">Port Harcourt, Nigeria</p>
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] font-black text-white">Contact</p>
+              <p className="text-xs text-neutral-500 font-mono">hello@crve.studio</p>
+              <p className="text-xs text-neutral-500 font-mono">Port Harcourt, Nigeria</p>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-white/5 text-center text-xs text-neutral-600">
+          <div className="mt-16 pt-8 border-t border-white/10 text-center text-xs text-neutral-600 font-mono">
             <p>&copy; 2026 CRVE. All rights reserved.</p>
           </div>
         </footer>

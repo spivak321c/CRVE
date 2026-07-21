@@ -54,9 +54,9 @@ export function InfiniteMarquee({
       <div ref={marqueeRef} className="flex whitespace-nowrap">
         <div ref={contentRef} className="flex gap-8 pr-8">
           {items.map((item, i) => (
-            <div key={i} className="text-3xl md:text-5xl font-black uppercase tracking-tighter flex-shrink-0">
+            <div key={i} className="text-3xl md:text-5xl font-black uppercase tracking-tighter flex-shrink-0 text-white">
               {item}
-              <span className="text-neon-cyan">*</span>
+              <span className="text-[#ff006e]">*</span>
             </div>
           ))}
         </div>
