@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -8,6 +8,7 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll
 import { ContactForm } from "@/components/contact-form"
 import { BookingForm } from "@/components/booking-form"
 import { ArrowRight, Plus, Minus } from "lucide-react"
+import { staggerFadeScale } from "@/lib/gsap-effects"
 
 const contactMethods = [
   { id: "01", label: "Email", value: "hello@crve.studio", href: "mailto:hello@crve.studio" },
@@ -50,6 +51,24 @@ export default function ContactPage() {
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index)
   }
+
+  useEffect(() => {
+    // Stagger animation for contact methods
+    staggerFadeScale(".contact-method", {
+      duration: 0.6,
+      stagger: 0.08,
+      delay: 0.1,
+      fromScale: 0.95,
+    })
+
+    // FAQ items animation
+    staggerFadeScale(".faq-item", {
+      duration: 0.6,
+      stagger: 0.05,
+      delay: 0.1,
+      fromScale: 0.98,
+    })
+  }, [])
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
@@ -95,7 +114,7 @@ export default function ContactPage() {
                 <StaggerItem key={method.id}>
                   <Link
                     href={method.href}
-                    className="group flex items-start gap-6 p-8 bg-black transition-all duration-300 hover:bg-white/[0.02]"
+                    className="contact-method group flex items-start gap-6 p-8 bg-black transition-all duration-300 hover:bg-white/[0.02]"
                   >
                     <span className="text-xs font-medium text-[#a6a6a6] tracking-wider mt-0.5">{method.id}</span>
                     <div className="flex-1">
@@ -174,7 +193,7 @@ export default function ContactPage() {
           </ScrollReveal>
           <div className="space-y-0">
             {faqs.map((item, i) => (
-              <div key={i} className="border-b border-white/[0.08] last:border-b-0">
+              <div key={i} className="faq-item border-b border-white/[0.08] last:border-b-0">
                 <ScrollReveal>
                   <button
                     onClick={() => toggleFaq(i)}

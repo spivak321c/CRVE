@@ -4,57 +4,54 @@ export function Footer() {
   return (
     <footer className="border-t border-white/[0.08] py-16 px-6 md:px-12">
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
-          <div>
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          {/* Logo and Description */}
+          <div className="md:col-span-1">
             <Link href="/" className="text-lg font-extrabold tracking-tight text-white">
               CRVE<span className="text-[#a6a6a6]">.</span>
             </Link>
-            <p className="text-sm text-[#a6a6a6] mt-4 max-w-xs leading-relaxed">
+            <p className="text-sm text-[#a6a6a6] mt-4 leading-relaxed">
               An independent design and development studio based in Port Harcourt.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-16">
-            <div>
-              <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Company</h4>
-              <ul className="space-y-2.5">
-                <li><Link href="/about" className="nav-link text-sm text-[#a6a6a6] hover:text-white">About</Link></li>
-                <li><Link href="/portfolio" className="nav-link text-sm text-[#a6a6a6] hover:text-white">Portfolio</Link></li>
-                <li><Link href="/services" className="nav-link text-sm text-[#a6a6a6] hover:text-white">Services</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Social</h4>
-              <ul className="space-y-2.5">
-                <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white">Instagram</a></li>
-                <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white">Twitter</a></li>
-                <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white">LinkedIn</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Contact</h4>
-              <ul className="space-y-2.5">
-                <li><a href="mailto:hello@crve.studio" className="nav-link text-sm text-[#a6a6a6] hover:text-white">hello@crve.studio</a></li>
-                <li><span className="text-sm text-[#a6a6a6]">Port Harcourt, Nigeria</span></li>
-              </ul>
-            </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Company</h4>
+            <ul className="space-y-2.5">
+              <li><Link href="/about" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">About</Link></li>
+              <li><Link href="/portfolio" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">Portfolio</Link></li>
+              <li><Link href="/services" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">Services</Link></li>
+            </ul>
+          </div>
+
+          {/* Social Links */}
+          <div>
+            <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Social</h4>
+            <ul className="space-y-2.5">
+              <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">Instagram</a></li>
+              <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">Twitter</a></li>
+              <li><a href="#" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">LinkedIn</a></li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-xs font-medium uppercase tracking-widest text-white/40 mb-4">Contact</h4>
+            <ul className="space-y-2.5">
+              <li><a href="mailto:hello@crve.studio" className="nav-link text-sm text-[#a6a6a6] hover:text-white transition-colors">hello@crve.studio</a></li>
+              <li><span className="text-sm text-[#a6a6a6]">Port Harcourt, Nigeria</span></li>
+            </ul>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-6 py-12 border-t border-white/[0.08]">
-          <div className="text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Strategy</p>
-          </div>
-          <div className="text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Execution</p>
-          </div>
-          <div className="text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">100% Planning</p>
-          </div>
-        </div>
-        <div className="border-t border-white/[0.08] pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-[#a6a6a6]">
+
+        {/* Footer Bottom */}
+        <div className="pt-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-[#a6a6a6]">
           <p>&copy; 2026 CRVE. All rights reserved.</p>
-          <div className="flex gap-8 mt-4 md:mt-0">
-            <a href="#" className="nav-link hover:text-white">Privacy</a>
-            <a href="#" className="nav-link hover:text-white">Terms</a>
+          <div className="flex gap-8">
+            <a href="#" className="nav-link hover:text-white transition-colors">Privacy</a>
+            <a href="#" className="nav-link hover:text-white transition-colors">Terms</a>
           </div>
         </div>
       </div>

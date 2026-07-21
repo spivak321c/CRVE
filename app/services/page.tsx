@@ -1,9 +1,13 @@
 "use client"
 
+import { useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
 import Link from "next/link"
+import Image from "next/image"
+import { magneticHover, staggerFadeScale } from "@/lib/gsap-effects"
 
 const serviceGroups = [
   {
@@ -82,7 +86,30 @@ const process = [
   },
 ]
 
+// Service card images mapped by ID
+const serviceImages: Record<string, string> = {
+  "01": "/images/service-strategy.png",
+  "02": "/images/service-design.png",
+  "03": "/images/service-design.png",
+  "04": "/images/service-development.png",
+  "05": "/images/service-development.png",
+  "06": "/images/service-strategy.png",
+}
+
 export default function ServicesPage() {
+  useEffect(() => {
+    // Initialize magnetic hover effects
+    magneticHover(".service-card-item", 0.3)
+
+    // Stagger animation for service items
+    staggerFadeScale(".service-card-item", {
+      duration: 0.6,
+      stagger: 0.05,
+      delay: 0.1,
+      fromScale: 0.95,
+    })
+  }, [])
+
   return (
     <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
       <Navigation />
@@ -127,8 +154,18 @@ export default function ServicesPage() {
                 {group.items.map((service) => (
                   <div
                     key={service.id}
-                    className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-b border-white/[0.08] last:border-b-0 overflow-hidden"
+                    className="service-card-item group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-b border-white/[0.08] last:border-b-0 overflow-hidden"
                   >
+                    {/* Animated background image */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500">
+                      <Image
+                        src={serviceImages[service.id] || "/images/service-design.png"}
+                        alt={service.title}
+                        fill
+                        className="object-cover scale-110"
+                        sizes="100vw"
+                      />
+                    </div>
                     <div className="absolute inset-0 bg-white transition-transform duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] scale-x-0 group-hover:scale-x-100 origin-left" />
                     <div className="relative z-10 md:col-span-1 transition-colors duration-300 group-hover:text-black">
                       <ScrollReveal>
