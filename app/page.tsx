@@ -180,151 +180,129 @@ export default function Home() {
         <Navigation />
 
         {/* HERO */}
-        <section className="relative h-screen overflow-hidden bg-black">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="https://res.cloudinary.com/mwvch9hy/video/upload/v1783198938/video1_pv1eob.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-black/60" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,#000_100%)]" />
+        <header id="home" className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-60"></div>
           </div>
 
-          <div className="absolute top-0 left-0 w-full h-full flex items-center pt-28 pb-12 px-6 md:px-12 z-10">
-            <div className="max-w-[1400px] mx-auto w-full">
-              <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  className="space-y-1 sm:space-y-2"
-                >
-                  <h1 className="text-[clamp(36px,8vw,88px)] font-extrabold leading-[1.08] tracking-[-0.04em] max-w-full break-words">
-                    {["Digital products.", "Brand systems.", "Creative motion."].map((line, lineIdx) => (
-                      <span key={line} className="block hero-line">
-                        <span className="block leading-[1.12]">
-                          {line.split(" ").map((word, wordIdx) => (
-                            <motion.span
-                              key={`${lineIdx}-${wordIdx}`}
-                              className="inline-block mr-[0.25em]"
-                              initial={{ y: "100%", opacity: 0 }}
-                              animate={{ y: 0, opacity: 1 }}
-                              transition={{
-                                delay: 0.3 + lineIdx * 0.25 + wordIdx * 0.12,
-                                duration: 0.8,
-                                ease: [0.16, 1, 0.3, 1],
-                              }}
-                            >
-                              {word}
-                            </motion.span>
-                          ))}
-                        </span>
-                      </span>
-                    ))}
-                  </h1>
-                </motion.div>
+          <div className="relative z-10">
+            <h1 className="text-[13vw] leading-[0.9] letter-spacing-[-0.05em] font-bold text-white text-center">
+              /design
+            </h1>
+          </div>
 
-                <StaggerItem>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
-                    <div className="text-base md:text-lg text-neutral-400 leading-relaxed md:font-light max-w-md">
-                      <WordReveal text="An independent design and development studio. We build things people actually want to use." />
-                    </div>
-                    <div className="flex flex-col items-start md:items-end">
-                      <Link
-                        href="/portfolio"
-                        className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
-                      >
-                        View Our Work
-                        <span className="inline-block w-12 h-px bg-white group-hover:w-20 transition-all duration-500" />
-                      </Link>
-                      <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800 mt-4">
-                        Scroll to explore
-                      </span>
-                    </div>
+          {/* Bottom UI Overlays */}
+          <div className="absolute bottom-12 left-8 md:left-12 flex items-center gap-5 group">
+            <div className="flex -space-x-4">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" alt="Team member" className="w-10 h-10 rounded-full border-2 border-[#050505] object-cover grayscale group-hover:grayscale-0 transition-all" />
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop" alt="Team member" className="w-10 h-10 rounded-full border-2 border-[#050505] object-cover grayscale group-hover:grayscale-0 transition-all delay-75" />
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop" alt="Team member" className="w-10 h-10 rounded-full border-2 border-[#050505] object-cover grayscale group-hover:grayscale-0 transition-all delay-150" />
+            </div>
+            <p className="text-xs md:text-sm font-medium leading-tight text-[#888888] group-hover:text-white transition-colors">
+              Building tomorrow&apos;s<br/>creative solutions.
+            </p>
+          </div>
+
+          <div className="absolute bottom-12 right-8 md:right-12 text-right">
+            <a href="mailto:hello@crve.studio" className="text-white font-medium hover:text-[#FF6B50] transition-colors border-b-2 border-white hover:border-[#FF6B50] pb-1">
+              hello@crve.studio
+            </a>
+          </div>
+        </header>
+
+        {/* WORK GALLERY */}
+        <section id="work" className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-20 border-b border-[#222222] pb-10">
+            <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#FF6B50]">Selected Work</h2>
+            <span className="hidden md:block text-[#444444] text-xs font-medium uppercase tracking-widest">Volume 01 &mdash; 2024</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32">
+            {projects.map((project, idx) => (
+              <article key={project.id} className="group cursor-pointer" style={{ marginTop: idx % 2 === 1 ? "6rem" : "0" }}>
+                <div className="aspect-[4/3] overflow-hidden bg-[#111111] rounded-sm">
+                  {project.images[0] ? (
+                    <Image
+                      src={project.images[0]}
+                      alt={project.title}
+                      fill
+                      className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-neutral-950" />
+                  )}
+                </div>
+                <div className="mt-8 flex justify-between items-start">
+                  <div>
+                    <h3 className="text-3xl font-bold tracking-tight mb-2 group-hover:text-[#FF6B50] transition-colors">{project.title}</h3>
+                    <p className="text-[#666666] text-[10px] font-bold uppercase tracking-[0.2em]">{project.category}</p>
                   </div>
-                </StaggerItem>
-            </div>
+                  <div className="p-3 rounded-full border border-[#333333] group-hover:bg-[#FF6B50] group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h10v10M7 17L17 7" />
+                    </svg>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* FEATURED PROJECTS HEADING */}
-        <section className="relative py-24 md:py-32 px-6 md:px-12">
-          <div className="max-w-[1400px] mx-auto w-full">
-            <ScrollReveal>
-              <div className="flex items-center gap-4">
-                <span className="w-8 h-px bg-white/30" />
-                <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">
-                  Featured Projects
-                </span>
-              </div>
-            </ScrollReveal>
+        {/* BENEFITS SECTION */}
+        <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-10">
+            <div className="w-2 h-2 rounded-full bg-[#FF6B50] animate-pulse"></div>
+            <span className="text-[10px] font-bold tracking-[0.3em] text-[#666666] uppercase">Why launch slow when you can move fast?</span>
           </div>
-        </section>
 
-        {/* STICKY STACKED CARDS (CSS sticky) */}
-        <section className="relative">
-          {projects.map((project, i) => (
-            <div
-              key={project.id}
-              className="project-card sticky top-0 h-screen w-full overflow-hidden"
-              style={{ zIndex: i + 1 }}
-            >
-              <div className="relative w-full h-[110%] -translate-y-[5%]">
-                {project.images[0] ? (
-                  <Image
-                    src={project.images[0]}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority={i === 0}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-neutral-950" />
-                )}
+          <h2 className="text-4xl md:text-7xl font-medium leading-[1.05] tracking-tight text-white max-w-5xl mb-24">
+            Clean, scalable design that helps you <span className="text-[#666666]">ship faster</span> and grow your revenue.
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-[#111111] rounded-[2.5rem] p-12 min-h-[520px] flex flex-col justify-between relative overflow-hidden group hover:bg-[#161616] transition-all duration-500">
+              <div className="absolute top-10 right-10 bg-[#1a1a1a] text-[10px] font-bold px-4 py-2 rounded-full uppercase tracking-widest text-[#888888] border border-[#333333]">
+                Hyper-Growth
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent via-50% to-black/40" />
-              <div className="absolute bottom-12 right-8 md:right-12 text-right">
-                <span className="text-xs font-mono text-white/40 block">{project.id}</span>
-                <h3 className="text-lg md:text-xl font-medium text-white">{project.title}</h3>
-                <span className="text-xs text-white/30 font-mono">{project.category}</span>
+              
+              <div className="mt-auto">
+                <h3 className="text-5xl md:text-7xl font-semibold tracking-tighter mb-2 text-white">
+                  Start faster.
+                </h3>
+                <h3 className="text-5xl md:text-7xl font-semibold tracking-tighter text-[#444444] group-hover:text-[#666666] transition-colors">
+                  Earn sooner.
+                </h3>
               </div>
             </div>
-          ))}
+
+            <div className="bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-[2.5rem] p-8 md:p-12 min-h-[520px] flex items-center justify-center relative overflow-hidden group">
+              <div className="w-full max-w-md bg-[#e5e5e5] rounded-xl shadow-2xl overflow-hidden transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                <div className="bg-[#f5f5f5] px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                  <div className="ml-4 h-3 w-32 bg-gray-200 rounded-full"></div>
+                </div>
+                <div className="aspect-video bg-gray-100 relative overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Dashboard preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/20"></div>
+                  <div className="absolute bottom-6 left-6 text-white">
+                    <div className="text-[10px] font-bold uppercase tracking-widest mb-1">Enterprise Edition</div>
+                    <div className="text-lg font-bold">Creative Suite v1.0</div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+          </div>
         </section>
 
         {/* LOWER CONTENT */}
         <section className="relative bg-black">
           <div className="bg-black">
-            {/* TICKER */}
-            <div className="border-t border-b border-white/[0.08] overflow-hidden py-4">
-              <div className="animate-marquee whitespace-nowrap flex">
-                <div className="inline-flex gap-16 shrink-0">
-                  {["Brand Identity", "Product Design", "Motion Graphics", "Web Engineering", "Digital Strategy"].map(
-                    (item) => (
-                      <span key={item} className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-800">
-                        {item}
-                      </span>
-                    )
-                  )}
-                </div>
-                <div className="inline-flex gap-16 shrink-0">
-                  {["Brand Identity", "Product Design", "Motion Graphics", "Web Engineering", "Digital Strategy"].map(
-                    (item) => (
-                      <span key={item} className="text-xs font-medium uppercase tracking-[0.25em] text-neutral-800">
-                        {item}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-
             {/* SERVICES */}
-            <section className="border-t border-white/[0.08]">
+            <section>
               <div className="max-w-[1400px] mx-auto px-6 md:px-12">
                 <ScrollReveal>
                   <h2 className="text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-600 py-8">

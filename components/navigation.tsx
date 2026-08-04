@@ -3,12 +3,13 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Globe, LayoutGrid, Smartphone, Package, MessageCircle } from "lucide-react"
 
 const navItems = [
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/about", label: "About" },
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#work", label: "Our Work" },
+  { href: "#contact", label: "Contact" },
 ]
 
 export function Navigation() {
@@ -31,45 +32,80 @@ export function Navigation() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-          scrolled ? "bg-black/90 backdrop-blur-md" : "bg-black"
+        className={`fixed top-0 left-0 right-0 z-50 px-6 py-6 flex items-center justify-between text-sm font-medium tracking-tight transition-all duration-500 ${
+          scrolled ? "bg-[rgba(17,17,17,0.8)] backdrop-blur-[12px] border-b border-[rgba(255,255,255,0.1)]" : "bg-transparent"
         }`}
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="flex items-center justify-between h-20 md:h-24">
-            <Link href="/" className="shrink-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white" onClick={closeMenu}>
-              CRVE<span className="text-[#a6a6a6]">.</span>
-            </Link>
-
-            <div className="hidden md:flex items-center gap-10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="nav-link text-xs font-medium uppercase tracking-widest text-[#a6a6a6] hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              ))}
+        <div className="flex items-center gap-10">
+          <Link href="/" className="shrink-0 flex items-center group" onClick={closeMenu}>
+            <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-black font-extrabold text-xl transition-transform group-hover:rotate-12">
+              C.
             </div>
-
-            <Link
-              href="/contact"
-              className="nav-link hidden md:inline-flex text-xs font-medium uppercase tracking-widest text-white"
-            >
-              Start a Project
-            </Link>
-
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden relative z-50 text-white"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+          </Link>
+          
+          <div className="hidden lg:flex items-center gap-8 text-[#888888]">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={closeMenu}
+                className="hover:text-white transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
+
+        <div className="flex items-center gap-8">
+          <Link
+            href="#journal"
+            onClick={closeMenu}
+            className="hidden md:block text-[#888888] hover:text-white transition-colors"
+          >
+            Our journal
+          </Link>
+          <Link
+            href="/contact"
+            className="px-5 py-2.5 bg-[#1a1a1a] hover:bg-white hover:text-black border border-[#333333] rounded-lg transition-all duration-300 text-[#888888] hover:text-black"
+            onClick={closeMenu}
+          >
+            Get started
+          </Link>
+        </div>
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden relative z-50 text-white"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </motion.nav>
+
+      {/* Floating Bottom Navigation */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 hidden md:flex items-center gap-2 p-2 bg-[rgba(17,17,17,0.8)] backdrop-blur-[12px] border border-[rgba(255,255,255,0.1)] rounded-2xl shadow-2xl">
+        <div className="flex items-center gap-1 pr-4 border-r border-[#333333]">
+          <button className="p-3 hover:bg-[#222222] rounded-xl transition-all group relative" title="Dashboard">
+            <LayoutGrid className="text-xl text-white w-5 h-5" />
+          </button>
+          <button className="p-3 hover:bg-[#222222] rounded-xl transition-all group relative" title="Global">
+            <Globe className="text-xl text-white w-5 h-5" />
+          </button>
+          <button className="p-3 hover:bg-[#222222] rounded-xl transition-all group relative" title="Mobile">
+            <Smartphone className="text-xl text-white w-5 h-5" />
+          </button>
+          <button className="p-3 hover:bg-[#222222] rounded-xl transition-all group relative" title="Services">
+            <Package className="text-xl text-white w-5 h-5" />
+          </button>
+          <button className="p-3 hover:bg-[#222222] rounded-xl transition-all group relative" title="Announcements">
+            <MessageCircle className="text-xl text-white w-5 h-5" />
+          </button>
+        </div>
+        <Link href="#contact" className="px-6 py-3 bg-[#FF6B50] hover:bg-[#E55A40] text-black font-bold text-sm tracking-wide uppercase rounded-xl transition-all">
+          Contact
+        </Link>
+      </div>
 
       <AnimatePresence>
         {mobileOpen && (
