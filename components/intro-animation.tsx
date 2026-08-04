@@ -10,12 +10,9 @@ export function IntroAnimation({ children }: { children: React.ReactNode }) {
   const [introDone, setIntroDone] = useState(false)
 
   useEffect(() => {
-    const t1 = setTimeout(() => setReady(true), 200)
-    const t2 = setTimeout(() => setIntroDone(true), 4500)
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-    }
+    // Skip intro animation for development
+    setReady(true)
+    setIntroDone(true)
   }, [])
 
   return (
