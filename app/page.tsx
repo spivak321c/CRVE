@@ -10,6 +10,7 @@ import { ScrollBackground } from "@/components/scroll-background"
 import { ScrollReveal, WordReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
 import { ValuesSection } from "@/components/values-section"
 import { HeroBanner } from "@/components/hero-banner"
+import { HeroWordmark } from "@/components/hero-wordmark"
 import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
 import Link from "next/link"
 import Image from "next/image"
@@ -185,10 +186,8 @@ export default function Home() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-60"></div>
           </div>
 
-          <div className="relative z-10">
-            <h1 className="text-[13vw] leading-[0.9] letter-spacing-[-0.05em] font-bold text-white text-center">
-              /design
-            </h1>
+          <div className="relative z-10 w-full flex justify-center px-6">
+            <HeroWordmark />
           </div>
 
           {/* Bottom UI Overlays */}
