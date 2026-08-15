@@ -53,7 +53,7 @@ function ValueItem({ text, delay = 0, index }: ValueItemProps) {
           observer.unobserve(entry.target)
         }
       },
-      { margin: "-100px" }
+      { rootMargin: "-100px" }
     )
 
     if (elementRef.current) {

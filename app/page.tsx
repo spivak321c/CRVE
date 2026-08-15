@@ -6,19 +6,14 @@ import { cancelFrame, frame } from "framer-motion"
 import { useEffect, useRef } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { ProjectMorph } from "@/components/project-morph"
 import { ScrollBackground } from "@/components/scroll-background"
-import { ScrollReveal, WordReveal, StaggerContainer, StaggerItem } from "@/components/scroll-reveal"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { ValuesSection } from "@/components/values-section"
-import { HeroBanner } from "@/components/hero-banner"
-import { GsapSectionWrapper } from "@/components/gsap-section-wrapper"
+import { ZoomPortalHero } from "@/components/zoom-portal-hero"
 import Link from "next/link"
-import Image from "next/image"
-import { motion } from "framer-motion"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { magneticHover, staggerFadeScale } from "@/lib/gsap-effects"
-
-const ease = [0.25, 1, 0.5, 1] as const
 
 const services = [
   {
@@ -71,6 +66,9 @@ const projects = [
     title: "Fruity Signature",
     category: "Brand Identity",
     year: "2024",
+    description:
+      "Identity and packaging system for a premium fruit preserve brand, built to own shelf space in a crowded retail category.",
+    tags: ["Identity", "Packaging", "Art Direction"],
     images: [
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198735/30fdf6222405637.67e52ac4759e9_txxyii.png",
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198752/Artboard_11.jpg_o0zaoy.jpg",
@@ -84,6 +82,9 @@ const projects = [
     title: "Alive",
     category: "Campaign",
     year: "2024",
+    description:
+      "Campaign identity for a product launch, built from one bold mark that flexes across print, digital and motion.",
+    tags: ["Campaign", "Art Direction", "Motion"],
     images: [
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783201792/alive_lmup2w.png",
     ],
@@ -93,6 +94,9 @@ const projects = [
     title: "Sabur Energy",
     category: "Brand Identity",
     year: "2024",
+    description:
+      "Brand identity for an energy company, from wordmark to billboards and citylight out-of-home, made to hold up at highway scale.",
+    tags: ["Identity", "Out-of-Home", "Brand System"],
     images: [
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200650/Free_Sign_Mockup_1_uu9ssf.jpg",
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200688/Billboard_Mockup_2_oc5mk0.jpg",
@@ -105,6 +109,8 @@ const projects = [
     title: "Flow",
     category: "Brand Identity",
     year: "2024",
+    description: "Visual identity for a creative consultancy, built on a fluid mark and a strict typographic system.",
+    tags: ["Identity", "Typography", "Collateral"],
     images: [
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200372/Artboard_1_jiovwj.jpg",
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783200369/Artboard_2_n5eo4c.jpg",
@@ -154,146 +160,39 @@ export default function Home() {
     }
   }, [])
 
-  // Initialize magnetic hover effects on service cards
-  useEffect(() => {
-    magneticHover(".service-card-hover", 0.4)
-    
-    return () => {
-      // Cleanup handled by magneticHover
-    }
-  }, [])
-
-  // Stagger animation for project cards
-  useEffect(() => {
-    staggerFadeScale(".project-card", {
-      duration: 0.6,
-      stagger: 0.1,
-      delay: 0.2,
-      fromScale: 0.95,
-    })
-  }, [])
-
   return (
     <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
       <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
         <ScrollBackground />
         <Navigation />
 
-        {/* HERO */}
-        <section className="relative h-screen overflow-hidden bg-black">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="https://res.cloudinary.com/mwvch9hy/video/upload/v1783198938/video1_pv1eob.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-black/60" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,transparent_0%,#000_100%)]" />
-          </div>
-
-          <div className="absolute top-0 left-0 w-full h-full flex items-center pt-28 pb-12 px-6 md:px-12 z-10">
-            <div className="max-w-[1400px] mx-auto w-full">
-              <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  className="space-y-1 sm:space-y-2"
-                >
-                  <h1 className="text-[clamp(36px,8vw,88px)] font-extrabold leading-[1.08] tracking-[-0.04em] max-w-full break-words">
-                    {["Digital products.", "Brand systems.", "Creative motion."].map((line, lineIdx) => (
-                      <span key={line} className="block hero-line">
-                        <span className="block leading-[1.12]">
-                          {line.split(" ").map((word, wordIdx) => (
-                            <motion.span
-                              key={`${lineIdx}-${wordIdx}`}
-                              className="inline-block mr-[0.25em]"
-                              initial={{ y: "100%", opacity: 0 }}
-                              animate={{ y: 0, opacity: 1 }}
-                              transition={{
-                                delay: 0.3 + lineIdx * 0.25 + wordIdx * 0.12,
-                                duration: 0.8,
-                                ease: [0.16, 1, 0.3, 1],
-                              }}
-                            >
-                              {word}
-                            </motion.span>
-                          ))}
-                        </span>
-                      </span>
-                    ))}
-                  </h1>
-                </motion.div>
-
-                <StaggerItem>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 md:mt-16 items-end">
-                    <div className="text-base md:text-lg text-neutral-400 leading-relaxed md:font-light max-w-md">
-                      <WordReveal text="An independent design and development studio. We build things people actually want to use." />
-                    </div>
-                    <div className="flex flex-col items-start md:items-end">
-                      <Link
-                        href="/portfolio"
-                        className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-white hover:text-neutral-400 transition-colors group"
-                      >
-                        View Our Work
-                        <span className="inline-block w-12 h-px bg-white group-hover:w-20 transition-all duration-500" />
-                      </Link>
-                      <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-800 mt-4">
-                        Scroll to explore
-                      </span>
-                    </div>
-                  </div>
-                </StaggerItem>
-            </div>
-          </div>
-        </section>
+        {/* HERO - Scroll Zoom Portal */}
+        <ZoomPortalHero />
 
         {/* FEATURED PROJECTS HEADING */}
-        <section className="relative py-24 md:py-32 px-6 md:px-12">
+        <section className="relative pt-24 md:pt-32 pb-12 md:pb-16 px-6 md:px-12">
           <div className="max-w-[1400px] mx-auto w-full">
             <ScrollReveal>
-              <div className="flex items-center gap-4">
-                <span className="w-8 h-px bg-white/30" />
-                <span className="text-xs font-medium uppercase tracking-[0.25em] text-white/40">
-                  Featured Projects
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <span className="w-8 h-px bg-[#a6a6a6]/60" aria-hidden="true" />
+                  <h2 className="text-[10px] font-medium uppercase tracking-[0.3em] text-[#a6a6a6]">
+                    Featured Projects
+                  </h2>
+                </div>
+                <span className="hidden sm:block text-[10px] font-medium uppercase tracking-[0.3em] text-neutral-600">
+                  Select a project
                 </span>
               </div>
             </ScrollReveal>
           </div>
         </section>
 
-        {/* STICKY STACKED CARDS (CSS sticky) */}
-        <section className="relative">
-          {projects.map((project, i) => (
-            <div
-              key={project.id}
-              className="project-card sticky top-0 h-screen w-full overflow-hidden"
-              style={{ zIndex: i + 1 }}
-            >
-              <div className="relative w-full h-[110%] -translate-y-[5%]">
-                {project.images[0] ? (
-                  <Image
-                    src={project.images[0]}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority={i === 0}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-neutral-950" />
-                )}
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent via-50% to-black/40" />
-              <div className="absolute bottom-12 right-8 md:right-12 text-right">
-                <span className="text-xs font-mono text-white/40 block">{project.id}</span>
-                <h3 className="text-lg md:text-xl font-medium text-white">{project.title}</h3>
-                <span className="text-xs text-white/30 font-mono">{project.category}</span>
-              </div>
-            </div>
-          ))}
+        {/* FEATURED PROJECTS - FLIP layout morph */}
+        <section className="px-6 md:px-12 pb-24 md:pb-32">
+          <div className="max-w-[1400px] mx-auto">
+            <ProjectMorph projects={projects} />
+          </div>
         </section>
 
         {/* LOWER CONTENT */}
@@ -337,22 +236,22 @@ export default function Home() {
                   {services.map((service) => (
                     <div
                       key={service.id}
-                      className="service-card-hover group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-t border-white/[0.08] overflow-hidden"
+                      className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-start py-10 px-6 md:px-12 border-t border-white/[0.08] overflow-hidden"
                     >
-                      <div className="absolute inset-0 bg-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] scale-x-0 group-hover:scale-x-100 origin-left" />
+                      <div className="service-wipe absolute inset-0 bg-white" />
                       <div className="relative z-10 md:col-span-1">
                         <ScrollReveal>
-                          <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-800 group-hover:text-black transition-colors duration-500">
+                          <span className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-800 group-hover:text-black transition-colors duration-700">
                             {service.id}
                           </span>
                         </ScrollReveal>
                       </div>
                       <div className="relative z-10 md:col-span-4">
                         <ScrollReveal delay={0.05}>
-                          <h2 className="text-xl md:text-2xl font-medium tracking-tight text-white group-hover:text-black mb-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+                          <h2 className="text-xl md:text-2xl font-medium tracking-tight text-white group-hover:text-black mb-3 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
                             {service.title}
                           </h2>
-                          <p className="text-sm text-neutral-400 group-hover:text-neutral-600 leading-relaxed transition-colors duration-500">
+                          <p className="text-sm text-neutral-400 group-hover:text-neutral-600 leading-relaxed transition-colors duration-700">
                             {service.description}
                           </p>
                         </ScrollReveal>
@@ -361,7 +260,7 @@ export default function Home() {
                         <ScrollReveal delay={0.1}>
                           <ul className="space-y-2">
                             {service.features.map((feature, i) => (
-                              <li key={i} className="text-xs text-neutral-600 group-hover:text-neutral-700 font-mono transition-colors duration-500">
+                              <li key={i} className="text-xs text-neutral-600 group-hover:text-neutral-700 font-mono transition-colors duration-700">
                                 {feature}
                               </li>
                             ))}
@@ -372,7 +271,7 @@ export default function Home() {
                         <ScrollReveal delay={0.15}>
                           <Link
                             href="/contact"
-                            className="nav-link text-xs font-medium uppercase tracking-[0.2em] text-neutral-500 group-hover:text-black transition-colors duration-500"
+                            className="nav-link text-xs font-medium uppercase tracking-[0.2em] text-neutral-500 group-hover:text-black transition-colors duration-700"
                           >
                             Inquire
                           </Link>

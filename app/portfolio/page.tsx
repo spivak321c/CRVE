@@ -14,7 +14,6 @@ const featuredProject = {
   category: "Branding & Design",
   description: "Premium brand identity and packaging design for a natural juice company.",
   image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198735/30fdf6222405637.67e52ac4759e9_txxyii.png",
-  hoverImage: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198717/floe33_eweolq.png",
   year: "2024",
 }
 
@@ -169,16 +168,8 @@ export default function PortfolioPage() {
                     alt={featuredProject.title}
                     fill
                     sizes="100vw"
-                    className="object-cover img-primary"
-                  />
-                ) : null}
-                {featuredProject.hoverImage ? (
-                  <Image
-                    src={featuredProject.hoverImage}
-                    alt=""
-                    fill
-                    sizes="100vw"
-                    className="object-cover img-secondary"
+                    priority
+                    className="object-cover"
                   />
                 ) : null}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
@@ -236,18 +227,9 @@ export default function PortfolioPage() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover"
                       />
-                    ) : null}
-                    {project.hoverImage ? (
-                      <Image
-                        src={project.hoverImage}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover"
-                      />
                     ) : (
-                      <div className="absolute inset-0 bg-black/90 flex items-center justify-center">
-                        <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/[0.35]">
+                      <div className="absolute inset-0 bg-neutral-900 flex items-center justify-center">
+                        <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/40">
                           View Project
                         </span>
                       </div>

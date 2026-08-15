@@ -144,11 +144,6 @@ export default function AboutPage() {
         </span>
         <StaggerContainer className="max-w-[1400px] mx-auto relative z-10 w-full">
           <StaggerItem>
-            <span className="text-xs font-medium uppercase tracking-[0.25em] text-[#a6a6a6] block mb-6">
-              About CRVE
-            </span>
-          </StaggerItem>
-          <StaggerItem>
             <h1 className="text-[clamp(32px,8vw,88px)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white max-w-full mb-8">
               We build brands that outlast trends.
             </h1>
@@ -164,10 +159,14 @@ export default function AboutPage() {
 
       {/* Studio Image */}
       <section className="border-t border-white/[0.08]">
-        <div className="h-[50vh] md:h-[60vh] w-full bg-black flex items-center justify-center border-b border-white/[0.08]">
-          <span className="text-[clamp(80px,15vw,200px)] font-extrabold text-white/[0.03] tracking-[-0.03em] select-none">
-            CRVE
-          </span>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-20">
+          <ScrollReveal>
+            <div className="w-full aspect-[21/9] bg-neutral-950 flex items-center justify-center">
+              <span className="text-[clamp(60px,12vw,160px)] font-extrabold text-white/[0.03] tracking-[-0.03em] select-none">
+                CRVE
+              </span>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -186,11 +185,6 @@ export default function AboutPage() {
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <p className="text-xl md:text-2xl text-[#a6a6a6] leading-relaxed font-light italic max-w-3xl">
-                We believe design should solve problems, not just look good.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
               <div className="max-w-xl space-y-6">
                 <p className="text-sm md:text-base text-[#a6a6a6] leading-relaxed font-light">
                   CRVE started with a simple belief: design should solve problems, not just look good.
@@ -262,9 +256,6 @@ export default function AboutPage() {
                     transition={{ duration: 0.6, delay: i * 0.1 }}
                     className="values-card w-[320px] flex-shrink-0 border border-white/[0.08] p-8 hover:-translate-y-1 transition-all duration-500 flex flex-col justify-between"
                   >
-                    <span className="text-5xl font-extrabold tracking-tight text-white/[0.06] block mb-6">
-                      {value.number}
-                    </span>
                     <div>
                       <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white mb-3">
                         {value.title}
@@ -283,14 +274,9 @@ export default function AboutPage() {
             {values.map((value, i) => (
               <ScrollReveal key={value.number} delay={i * 0.08}>
                 <div className="values-card border border-white/[0.08] p-6">
-                  <div className="flex items-center gap-4 mb-3">
-                    <span className="text-sm font-extrabold tracking-tight text-[#a6a6a6]">
-                      {value.number}
-                    </span>
-                    <h3 className="text-lg font-medium tracking-tight text-white">
-                      {value.title}
-                    </h3>
-                  </div>
+                  <h3 className="text-lg font-medium tracking-tight text-white mb-2">
+                    {value.title}
+                  </h3>
                   <p className="text-sm text-[#a6a6a6] leading-relaxed">
                     {value.description}
                   </p>

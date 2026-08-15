@@ -8,9 +8,6 @@ export const metadata: Metadata = {
   title: "CRVE | Creative Agency",
   description: "An independent design and development studio. We build things people actually want to use.",
   generator: "v0.app",
-  icons: {
-    icon: "/crve.ico",
-  },
 }
 
 export const viewport: Viewport = {

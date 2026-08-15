@@ -2,12 +2,10 @@
 
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
 const navItems = [
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
 ]
 
@@ -27,17 +25,18 @@ export function Navigation() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      <nav
+        className={`fixed top-0 w-full z-50 animate-nav-enter transition-colors duration-500 ${
           scrolled ? "bg-black/90 backdrop-blur-md" : "bg-black"
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-20 md:h-24">
-            <Link href="/" className="shrink-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white" onClick={closeMenu}>
+            <Link
+              href="/"
+              className="shrink-0 text-2xl md:text-3xl font-extrabold tracking-tight text-white"
+              onClick={closeMenu}
+            >
               CRVE<span className="text-[#a6a6a6]">.</span>
             </Link>
 
@@ -64,58 +63,57 @@ export function Navigation() {
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden relative z-50 text-white"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black z-40 flex flex-col pt-28 px-8"
-            onClick={(e) => { if (e.target === e.currentTarget) closeMenu() }}
-          >
-            <div className="flex flex-col gap-6">
-              {navItems.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05, duration: 0.4 }}
-                >
-                  <Link
-                    href={item.href}
-                    className="text-4xl font-medium tracking-tight text-white hover:text-white/50 transition-colors"
-                    onClick={closeMenu}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.4 }}
-                className="mt-6 pt-6 border-t border-white/[0.08]"
+      <div
+        className={`md:hidden fixed inset-0 bg-black z-40 flex flex-col pt-28 px-8 transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeMenu()
+        }}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="flex flex-col gap-6">
+          {navItems.map((item, i) => (
+            <div
+              key={item.href}
+              className={`transition-all duration-400 ${
+                mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: mobileOpen ? `${i * 50 + 100}ms` : "0ms" }}
+            >
+              <Link
+                href={item.href}
+                className="text-4xl font-medium tracking-tight text-white hover:text-white/50 transition-colors"
+                onClick={closeMenu}
               >
-                <Link
-                  href="/contact"
-                  className="text-sm font-medium uppercase tracking-widest text-white"
-                  onClick={closeMenu}
-                >
-                  Start a Project
-                </Link>
-              </motion.div>
+                {item.label}
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+          <div
+            className={`mt-6 pt-6 border-t border-white/[0.08] transition-all duration-400 ${
+              mobileOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+            style={{ transitionDelay: mobileOpen ? "300ms" : "0ms" }}
+          >
+            <Link
+              href="/contact"
+              className="text-sm font-medium uppercase tracking-widest text-white"
+              onClick={closeMenu}
+            >
+              Start a Project
+            </Link>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
