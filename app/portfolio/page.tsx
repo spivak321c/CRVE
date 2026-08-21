@@ -10,7 +10,7 @@ import Image from "next/image"
 import { staggerFadeScale, parallaxScroll } from "@/lib/gsap-effects"
 
 const featuredProject = {
-  title: "Fruity Signature",
+  title: "Floe",
   category: "Branding & Design",
   description: "Premium brand identity and packaging design for a natural juice company.",
   image: "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198735/30fdf6222405637.67e52ac4759e9_txxyii.png",

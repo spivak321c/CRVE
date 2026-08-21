@@ -63,7 +63,7 @@ const services = [
 const projects = [
   {
     id: "001",
-    title: "Fruity Signature",
+    title: "Floe",
     category: "Brand Identity",
     year: "2024",
     description:
@@ -75,18 +75,6 @@ const projects = [
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198690/2ccb96170262679.645aed7c1e02c.jpg_stwlvg.jpg",
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198797/b07a93222405637.67e52ac478c12_xs9vtn.png",
       "https://res.cloudinary.com/mwvch9hy/image/upload/v1783198717/floe33_eweolq.png",
-    ],
-  },
-  {
-    id: "002",
-    title: "Alive",
-    category: "Campaign",
-    year: "2024",
-    description:
-      "Campaign identity for a product launch, built from one bold mark that flexes across print, digital and motion.",
-    tags: ["Campaign", "Art Direction", "Motion"],
-    images: [
-      "https://res.cloudinary.com/mwvch9hy/image/upload/v1783201792/alive_lmup2w.png",
     ],
   },
   {
